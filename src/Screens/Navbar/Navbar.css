@@ -1,0 +1,45 @@
+/* src/Navbar.css */
+
+/* Style the overall navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: rgba(54, 54, 54, 0.696);
+  padding: 10px 20px;
+   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Style the left content (title) */
+.left-content {
+  font-size: 24px;
+}
+
+/* Style the right content (items and button) */
+.right-content {
+  display: flex;
+  align-items: center;
+}
+
+/* Style individual items and button */
+.item {
+  margin-right: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.button {
+  background-color: #ff6600;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Hover effect for items and button */
+.item:hover,
+.button:hover {
+    color: #f34040;
+}

@@ -1,0 +1,28 @@
+
+.body{
+    margin: 0px;
+}
+.mainScreen {
+  display: flex;
+  justify-content: space-around;
+}
+.leftSide {
+  background-color: #ffffff;
+  margin: 40px;
+  width: 50%;
+  height: 400px;
+}
+.rightSide {
+  background-image: url("./assets/bg-image.jpg");
+  background-size: cover; 
+  background-repeat: no-repeat; 
+  color: white;
+  margin: 10px 20px;
+  width: 50%;
+  height: 400px;
+}
+.Scrolltext{
+    color: orange;
+    font-size: larger;
+    font-weight: bolder;
+}
