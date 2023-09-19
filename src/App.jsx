@@ -7,8 +7,9 @@ function App() {
 
   React.useEffect(() => {
     const typed = new Typed(el.current, {
-      strings: ["This is a VideoCall App"],
+      strings: ["This is a VideoCall App","mama gadha h", "mai pro hu"],
       typeSpeed: 50,
+      loop: true,
     });
 
     return () => {
@@ -18,9 +19,9 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <span ref={el} />
+    <div className="">
       <h1>hhdakhkhdakjh</h1>
+      <span ref={el} />
     </div>
   );
 }
