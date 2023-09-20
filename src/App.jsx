@@ -2,12 +2,30 @@ import React from "react";
 import Typed from "typed.js";
 import Navbar from "./Screens/Navbar/Navbar";
 import "./App.css";
+import { socket } from "./socket";
 
 function App() {
+
+
+  //useState hook
+  const [isConnected, setIsConnected] = React.useState(socket.connected);
   // Create reference to store the DOM element containing the animation
   const el = React.useRef(null);
 
   React.useEffect(() => {
+
+    //socket
+    function onConnect() {
+      setIsConnected(true);
+    }
+
+    function onDisconnect() {
+      setIsConnected(false);
+    }
+    
+    socket.on('connect', onConnect);
+    socket.on('disconnect', onDisconnect);
+
     const typed = new Typed(el.current, {
       strings: [
         "This is a VideoCall App",
@@ -21,8 +39,14 @@ function App() {
     return () => {
       // Destroy Typed instance during cleanup to stop animation
       typed.destroy();
+      socket.off('connect', onConnect);
+      socket.off('disconnect', onDisconnect);
+      
     };
   }, []);
+
+  
+
 
   return (
     <div className="body">
