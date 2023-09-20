@@ -17,6 +17,7 @@ function Navbar() {
         <span className="title">Screen<b>Share</b></span>
       </div>
       <div className="right-content">
+        
         <div className="item" onClick={ connect }>Join a call</div>
         <div className="item" onClick={ disconnect }>Host a call</div>
         <button className="button">Sign Up</button>

@@ -3,7 +3,7 @@ import Typed from "typed.js";
 import Navbar from "./Screens/Navbar/Navbar";
 import "./App.css";
 import { socket } from "./socket";
-
+import JoinCall from "./Screens/JoinCall/JoinCall";
 function App() {
 
 
@@ -64,6 +64,7 @@ function App() {
         </div>
         <div className="rightSide"></div>
       </div>
+<JoinCall/>
     </div>
   );
 }
