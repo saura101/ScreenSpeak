@@ -1,10 +1,16 @@
 import "./Navbar.css"; // You'll create this CSS file in the next step
-import { socket } from "../../socket";
+import { useSocket } from "../../socket";
+
+
 
 function Navbar() {
 
+
+  const {socket} = useSocket();
   function connect() {
     socket.connect();
+    socket.emit("join-call",{roomID: "1",emailID : "piyushgarg@toph.com"});
+    console.log("hello");
   }
 
   function disconnect() {
