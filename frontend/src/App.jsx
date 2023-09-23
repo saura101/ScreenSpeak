@@ -2,14 +2,9 @@ import React, { useState } from "react";
 import Typed from "typed.js";
 import Navbar from "./Screens/Navbar/Navbar";
 import "./App.css";
-<<<<<<< HEAD:frontend/src/App.jsx
 import { useSocket } from "./socket";
-//import { socket } from "./socket";
-
-=======
-import { socket } from "./socket";
 import JoinCall from "./Screens/JoinCall/JoinCall";
->>>>>>> 6e1d165fd11a565f3ef4f61113733959f6a8e2d0:src/App.jsx
+
 function App() {
 
   const { socket } = useSocket();
