@@ -1,16 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import Typed from "typed.js";
 import Navbar from "./Screens/Navbar/Navbar";
 import "./App.css";
-import { socket } from "./socket";
+import { useSocket } from "./socket";
 import JoinCall from "./Screens/JoinCall/JoinCall";
+
 function App() {
 
+  const { socket } = useSocket();
+  
+  
 
   //useState hook
   const [isConnected, setIsConnected] = React.useState(socket.connected);
+  const [email,setemail] = useState();
+  const [roomid,setRoomid] = useState();
   // Create reference to store the DOM element containing the animation
   const el = React.useRef(null);
+
 
   React.useEffect(() => {
 
@@ -49,7 +56,7 @@ function App() {
 
 
   return (
-    <div className="body">
+       <div className="body">
       <Navbar />
       <div className="mainScreen">
         <div className="leftSide">
