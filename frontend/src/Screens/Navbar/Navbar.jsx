@@ -1,5 +1,6 @@
 import "./Navbar.css"; // You'll create this CSS file in the next step
 import { useSocket } from "../../socket";
+import React from "react";
 
 
 
@@ -16,6 +17,15 @@ function Navbar() {
   function disconnect() {
     socket.disconnect();
   }
+
+  function handleRoomJoined({ roomID }) {
+    console.log("user joined room");
+    //redirect user to the videocall page
+  }
+
+  React.useEffect(()=> {
+    socket.on("joined-room",handleRoomJoined)
+  },[socket]);
 
   return (
     <div className="navbar">

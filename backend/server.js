@@ -15,19 +15,29 @@ const io = new Server(httpServer, {
       }
   });
 
-const emailToSocketMapping  = new Map();
+const emailToSocketMapping = new Map();
+const socketToEmailMapping = new Map();
 
 io.on("connection", (socket) => {
     console.log(socket.connected);
     console.log("a new user has connected",socket.id);
+
     socket.on("join-call",(data) => {
         const { roomID, emailID, name } = data;
         console.log(`user ${emailID} joined the room ${roomID}`);
         emailToSocketMapping.set(emailID,socket.id);
+        socketToEmailMapping.set(socket.id,emailID);
         socket.join(roomID);
         socket.emit("joined-room", {roomID});
-        socket.broadcast.to(roomID).emit("new user joined",{ name,emailID});
+        socket.broadcast.to(roomID).emit("user-joined",{ name,emailID});
     });
+    socket.on("call-user",()=> {
+        const {emailID, offer } = data;
+        const socketID = emailToSocketMapping.get(emailID);
+        const fromEmail = socketToEmailMapping.get(socket.id);
+        socket.to(socketID).emit("incoming-call", { from : fromEmail , offer});
+    });
+
 });
   
 
