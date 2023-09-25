@@ -33,7 +33,8 @@ io.on("connection", (socket) => {
         socketToEmailMapping.set(socket.id,emailID);
         socket.join(roomID);
         socket.emit("joined-call", {roomID});
-        socket.broadcast.to(roomID).emit("user-joined",{ name,emailID});
+        let id = socket.id;
+        socket.broadcast.to(roomID).emit("user-joined",{ name,emailID,id});
     });
 
     socket.on("call-user",(data)=> {
