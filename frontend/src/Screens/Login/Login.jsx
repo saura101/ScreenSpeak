@@ -30,7 +30,7 @@ function Login() {
   function handleCallJoined({ roomID }) {
     console.log("user joined room");
     //redirect user to the videocall page
-    navigate("/joincall");
+    // navigate("/joincall");
   }
 
   function disconnect() {
