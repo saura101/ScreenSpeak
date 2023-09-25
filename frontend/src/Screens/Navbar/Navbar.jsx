@@ -30,12 +30,12 @@ function Navbar() {
   return (
     <div className="navbar">
       <div className="left-content">
-        <span className="title">
+        <span className="title" className="Scrolltext">
           Screen<b>Share</b>
         </span>
       </div>
       <div className="right-content">
-        <div className="item" onClick={connect} >
+        <div className="item" onClick={connect}>
           Join a call
         </div>
         <div className="item" onClick={disconnect}>
