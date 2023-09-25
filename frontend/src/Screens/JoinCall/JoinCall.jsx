@@ -1,4 +1,5 @@
 // VideoCall.js
+import Room from "../../room";
 import React, { useState } from "react";
 import {
   FaMicrophone,
@@ -27,7 +28,9 @@ const JoinCall = () => {
 
   return (
     <div className="video-call">
-      <div className="video-screen"></div>
+      <div className="video-screen">
+        <Room />
+      </div>
       <div className="controls">
         <button
           onClick={toggleAudio}

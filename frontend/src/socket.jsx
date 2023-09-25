@@ -12,7 +12,7 @@ export const useSocket = () => {
 };
 export const SocketProvider = (props) => {
 
-    const URL = process.env.NODE_ENV === 'production' ? undefined : 'http://localhost:3000';
+    const URL = process.env.NODE_ENV === 'production' ? undefined : 'http://127.0.0.1:3000';
     const name = "aditya";
     // const socket = useMemo(()=> {
     //     io(URL,{

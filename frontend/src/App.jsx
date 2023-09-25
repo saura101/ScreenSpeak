@@ -6,13 +6,13 @@ import JoinCall from "./Screens/JoinCall/JoinCall";
 import HomePage from "./Screens/HomePage/HomePage";
 import Login from "./Screens/Login/Login";
 
+
 function App() {
   const { socket } = useSocket();
 
   //useState hook
+  const [roomid, setRoomid] = useState("");
   const [isConnected, setIsConnected] = React.useState(socket.connected);
-  const [email, setemail] = useState();
-  const [roomid, setRoomid] = useState();
 
   React.useEffect(() => {
     //socket
