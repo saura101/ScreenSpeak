@@ -96,15 +96,15 @@ function Room() {
 
     },[socket])
 
-    React.useEffect(()=>{
-        getUserMediaStream();
-        peer.addEventListener("track",handleTrack);
+    // React.useEffect(()=>{
+    //     getUserMediaStream();
+    //     peer.addEventListener("track",handleTrack);
 
-        //cleanup
-        return function () {
-            peer.removeEventListener("track",handleTrack);
-        }
-    },[getUserMediaStream,peer,handleTrack]);
+    //     //cleanup
+    //     return function () {
+    //         peer.removeEventListener("track",handleTrack);
+    //     }
+    // },[getUserMediaStream,peer,handleTrack]);
     return (
         <div className="room">
             <h1>call room</h1>

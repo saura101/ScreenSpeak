@@ -30,13 +30,21 @@ function Navbar() {
   return (
     <div className="navbar">
       <div className="left-content">
-        <span className="title">Screen<b>Share</b></span>
+        <span className="title">
+          Screen<b>Share</b>
+        </span>
       </div>
       <div className="right-content">
-        
-        <div className="item" onClick={ connect }>Join a call</div>
-        <div className="item" onClick={ disconnect }>Host a call</div>
-        <button className="button">Sign Up</button>
+        <div className="item" onClick={connect} >
+          Join a call
+        </div>
+        <div className="item" onClick={disconnect}>
+          Host a call
+        </div>
+
+        <a className="button" href={`/login`}>
+          Sign Up
+        </a>
       </div>
     </div>
   );
