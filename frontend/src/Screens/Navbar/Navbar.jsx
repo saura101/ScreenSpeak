@@ -7,25 +7,25 @@ import React from "react";
 function Navbar() {
 
 
-  const {socket} = useSocket();
+   const {socket} = useSocket();
   function connect() {
     socket.connect();
-    socket.emit("join-call",{roomID: "1",emailID : "piyushgarg@toph.com"});
-    console.log("hello");
+    // socket.emit("join-call",{roomID: "1",emailID : "piyushgarg@toph.com"});
+    // console.log("hello");
   }
 
   function disconnect() {
     socket.disconnect();
   }
 
-  function handleRoomJoined({ roomID }) {
-    console.log("user joined room");
-    //redirect user to the videocall page
-  }
+  // function handleRoomJoined({ roomID }) {
+  //   console.log("user joined room");
+  //   //redirect user to the videocall page
+  // }
 
-  React.useEffect(()=> {
-    socket.on("joined-room",handleRoomJoined)
-  },[socket]);
+  // React.useEffect(()=> {
+  //   socket.on("joined-room",handleRoomJoined)
+  // },[socket]);
 
   return (
     <div className="navbar">

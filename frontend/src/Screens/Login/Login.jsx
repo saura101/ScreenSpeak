@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import "./Login.css"
+import { useSocket } from "../../socket";
 
 function Login() {
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [roomid, setRoomid] = useState("");
+
+  const {socket} = useSocket();
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -16,7 +21,29 @@ function Login() {
   const handleJoinCall = () => {
     console.log(name);
     console.log(email);
+    socket.connect();
+    socket.emit("join-call",{roomID: "1",emailID : email, name : name});
+
   };
+
+  function handleCallJoined({ roomID }) {
+    console.log("user joined room");
+    //redirect user to the videocall page
+  }
+
+  function disconnect() {
+    socket.disconnect();
+  }
+
+  React.useEffect(()=> {
+    socket.on("joined-call",handleCallJoined);
+
+    //cleanup
+    return function () {
+      socket.off("joined-call",handleCallJoined);
+    }
+  },[socket]);
+
   return (
     <div className="login-container">
       <h1>Enter Your Details</h1>
