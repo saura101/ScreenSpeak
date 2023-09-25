@@ -35,7 +35,7 @@ const HomePage = () => {
           hello to a world where miles fade into pixels, and conversations
           become moments to treasure.
         </h4>
-        <span ref={el} />
+        <span ref={el} className="Scrolltext" />
       </div>
       <div className="rightSide"></div>
     </div>
