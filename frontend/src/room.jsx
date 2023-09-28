@@ -4,6 +4,7 @@ import ReactPlayer from "react-player";
 
 
 let peer = null;
+// let remoteVideo = document.getElementById("remoteVideo");
 function Room() {
 
     const { socket } = useSocket();
@@ -11,7 +12,7 @@ function Room() {
     console.log(socket.id);
     //stream state
     const [myStream, setMyStream] = useState(null);
-    const [remoteStream, setRemoteStream] = useState(null);
+    const [remoteStream, setRemoteStream] = useState();
     const [remoteSocket, setRemoteSocket] = useState(null);
     const [remoteEmail, setRemoteEmail] = useState(null);
     
@@ -25,22 +26,18 @@ function Room() {
         peer = new RTCPeerConnection(config);
         peer.addEventListener("track",handleTrack);
         const offer = await peer.createOffer();
-        await peer.setLocalDescription(offer);
+        await peer.setLocalDescription(new RTCSessionDescription(offer));
         socket.emit("call-user", {emailID, offer});
-        // const ans = await handleAcceptedCall(data);
-        // await peer.setRemoteDescription(ans);
-        // console.log("call got accepted",ans);
     }
 
     async function answerCall(offer,from) {
         peer = new RTCPeerConnection(config);
         peer.addEventListener("track",handleTrack);
-        await peer.setRemoteDescription(offer);
-        console.log("gublu chutiya");
+        await peer.setRemoteDescription(new RTCSessionDescription(offer));
+        console.log("offer accepted");
         const answer = await peer.createAnswer();
-        await peer.setLocalDescription(answer);
+        await peer.setLocalDescription(new RTCSessionDescription(answer));
         socket.emit("call-accepted",{ emailID: from, answer });
-        //console.log("peer1",peer);
     }
 
     async function handleNewUser(data) {
@@ -49,7 +46,6 @@ function Room() {
         setRemoteSocket(id);
         setRemoteEmail(emailID);
         await makeCall(emailID);
-        //console.log("peer2",peer);
     }
 
     async function handleIncomingCall(data) {
@@ -61,49 +57,49 @@ function Room() {
     }
 
     async function setAnswer(answer) {
-        await peer.setRemoteDescription(answer);
-        console.log("abhshek chutiya");
+        await peer.setRemoteDescription(new RTCSessionDescription(answer));
+        console.log("answwer Accepted");
         console.log("call got accepted",answer);
     }
 
     async function handleAcceptedCall(data) {
         const { answer } = data;
         await setAnswer(answer);
-        //peer.onTrack()
     }
 
     async function getUserMediaStream() {
-        // let stream = null;
-        // try {
-        //     stream = await navigator.mediaDevices.getUserMedia({ audio : true, video : true});
-        //     setMyStream(stream);
-        // } catch(err) {
-        //     console.log(err);
-        // }
+        let stream = null;
+        try {
+            stream = await navigator.mediaDevices.getUserMedia({ audio : true, video : true});
+            setMyStream(stream);
+        } catch(err) {
+            console.log(err);
+        }
     }
 
     async function sendStream() {
          myStream.getTracks().forEach(async(track) => {
-            //peer.peer.addTrack(track,stream);
-            peer.addTrack(track,myStream);
+            await peer.addTrack(track,myStream);
             console.log("stream sent",myStream);
         });
     }
 
-    function handleSend() {
+    async function handleSend() {
+        peer.addEventListener("negotiationneeded",handleNegotiation);
+        await sendStream();
         peer.addEventListener("track",handleTrack);
-        sendStream();
     }
 
     async function handleTrack(event) {
-        console.log("recieved",event.streams[0]);
         const streams = event.streams;
+        console.log("recieved",streams[0]);
         setRemoteStream(streams[0]);
+        console.log("remote",remoteStream);
     }
 
     async function handleNegoIncoming(data) {
         const { from, offer } = data;
-        peer.setRemoteDescription(offer);
+        peer.setRemoteDescription(new RTCSessionDescription(offer));
         const ans = await peer.createAnswer();
         peer.setLocalDescription(new RTCSessionDescription(ans));
         socket.emit("nego-done",{ to: from, ans });
@@ -111,7 +107,7 @@ function Room() {
 
     async function handleNegoFinal(data) {
         const { ans } = data;
-        // await peer.setLocalDescription(ans);
+         await peer.setRemoteDescription(new RTCSessionDescription(ans));
     }
 
     React.useEffect(()=> {
@@ -147,32 +143,15 @@ function Room() {
     }
 
     async function handleCall() {
-        //getUserMediaStream();
-        console.log("peer5",peer);
-        try {
-            let stream = await navigator.mediaDevices.getUserMedia({ audio : true, video : true});
-            setMyStream(stream);
-            console.log("hello ji kaise ho saare");
-            // if(peer === null) {
-            //     console.log(remoteEmail);
-            //     makeCall(remoteEmail);
-            //     console.log("no kaise");
-            // }
-            peer.addEventListener("negotiationneeded",handleNegotiation);
-            //peer.addEventListener("track",handleTrack);
-        } catch(err) {
-            console.log(err);
-        }
-        
+        getUserMediaStream();
+        console.log("hello ji kaise ho saare");
+        //peer.addEventListener("negotiationneeded",handleNegotiation);        
     }
     React.useEffect(()=>{
-        // getUserMediaStream();
-        //peer.addEventListener("track",handleTrack);
         peerCheck();
         //cleanup
         return function () {
             peerCheck();
-            //peer.removeEventListener("track",handleTrack);
         }
     },[remoteSocket]);
 
@@ -183,25 +162,24 @@ function Room() {
         socket.emit("nego-needed",{ offer, to : remoteSocket});
     }
 
-    React.useEffect(()=> {
-        //peer.addEventListener("negotiationneeded",handleNegotiation);
-        
-        return function () {
-            //peer.removeEventListener("negotiationneeded",handleNegotiation);
-        }
-    },[handleNegotiation]);
-
     return (
         <div className="room">
             <h1>call room</h1>
             <h4>{remoteSocket ? "connected" : "no one in room" }</h4>
             <div className="stream-cont">
-                <div className="stream">
-                <ReactPlayer url={myStream} playing muted/>
-                </div>
-                <div className="stream">
-                <ReactPlayer url={remoteStream} playing />
-                </div>
+            {
+                    myStream && 
+                    <div className="stream">
+                        <ReactPlayer url={myStream} playing muted/>
+                    </div>
+                }
+                {
+                    remoteStream && 
+                    <div className="stream">
+                        <ReactPlayer url={remoteStream} playing muted/>
+                    </div>
+                }
+                {/* <video id="remoteVideo" autoPlay></video> */}
             </div>
             <button onClick={handleCall} id="call">call</button>
             <button onClick={handleSend} id="call">send</button>

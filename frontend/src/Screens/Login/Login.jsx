@@ -26,8 +26,6 @@ function Login() {
     console.log(name);
     console.log(email);
     await socket.connect();
-    console.log(socket);
-    console.log(socket.connected);
     socket.emit("join-call", { roomID: "1", emailID: email, name: name });
   };
 

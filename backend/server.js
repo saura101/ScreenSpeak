@@ -35,6 +35,7 @@ io.on("connection", (socket) => {
         socket.emit("joined-call", {roomID});
         console.log(socket.connected);
         let id = socket.id;
+        //except the sender itself
         socket.broadcast.to(roomID).emit("user-joined",{ name, emailID, id});
     });
 
@@ -54,12 +55,12 @@ io.on("connection", (socket) => {
 
     socket.on("nego-needed",(data) => {
         const { offer , to } = data;
-        io.to(to).emit("nego-needed",{ from : socket.id, offer}); 
+        socket.to(to).emit("nego-needed",{ from : socket.id, offer}); 
     });
 
     socket.on("nego-done",(data) => {
         const { to , ans } = data;
-        io.to(to).emit("nego-final",{ from : socket.id, ans }); 
+        socket.to(to).emit("nego-final",{ ans }); 
     });
 
 });
