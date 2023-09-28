@@ -5,36 +5,33 @@ import { SocketProvider } from "./socket";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./Screens/Login/Login.jsx";
 import JoinCall from "./Screens/JoinCall/JoinCall.jsx";
+import Room from "./room.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <SocketProvider>
         <App />
-      </SocketProvider>
     ),
   },
   {
     path: "/login",
     element: (
-      <SocketProvider>
         <Login />
-      </SocketProvider>
     ),
   },
   {
     path: "/joincall",
     element: (
-      <SocketProvider>
         <JoinCall />
-      </SocketProvider>
     ),
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <SocketProvider >
+      <RouterProvider router={router} />
+    </SocketProvider>  
   </React.StrictMode>
 );

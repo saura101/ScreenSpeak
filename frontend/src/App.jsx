@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import Navbar from "./Screens/Navbar/Navbar";
 import "./App.css";
 import { useSocket } from "./socket";
-import JoinCall from "./Screens/JoinCall/JoinCall";
+// import JoinCall from "./Screens/JoinCall/JoinCall";
 import HomePage from "./Screens/HomePage/HomePage";
-import Login from "./Screens/Login/Login";
-import { Route, Routes } from "react-router-dom";
+// import Login from "./Screens/Login/Login";
+// import { Route, Routes } from "react-router-dom";
 
 function App() {
   const { socket } = useSocket();

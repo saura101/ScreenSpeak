@@ -1,6 +1,8 @@
 // VideoCall.js
 import Room from "../../room";
+import { SocketProvider } from "../../socket";
 import React, { useState } from "react";
+import { useSocket } from "../../socket";
 import {
   FaMicrophone,
   FaMicrophoneSlash,
@@ -15,11 +17,11 @@ const JoinCall = () => {
   const [isPaused, setIsPaused] = useState(false);
 
   const toggleAudio = () => {
-    setIsAudioMuted(!isAudioMuted);
+    //setIsAudioMuted(!isAudioMuted);
   };
 
   const togglePause = () => {
-    setIsPaused(!isPaused);
+    // setIsPaused(!isPaused);
   };
 
   const endCall = () => {

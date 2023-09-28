@@ -10,6 +10,7 @@ function Navbar() {
    const {socket} = useSocket();
   function connect() {
     socket.connect();
+    console.log(socket);
     // socket.emit("join-call",{roomID: "1",emailID : "piyushgarg@toph.com"});
     // console.log("hello");
   }
@@ -30,7 +31,7 @@ function Navbar() {
   return (
     <div className="navbar">
       <div className="left-content">
-        <span className="title" className="Scrolltext">
+        <span className="title">
           Screen<b>Share</b>
         </span>
       </div>
@@ -42,7 +43,7 @@ function Navbar() {
           Host a call
         </div>
 
-        <a className="button" href={`/login`}>
+        <a className="button" href="/login">
           Sign Up
         </a>
       </div>
