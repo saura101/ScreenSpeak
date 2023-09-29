@@ -36,10 +36,11 @@
   border-radius: 5px;
   font-weight: bold;
   cursor: pointer;
+  text-decoration: none;
 }
 
 /* Hover effect for items and button */
 .item:hover,
 .button:hover {
-    color: #f34040;
+    color: #dbf340;
 }

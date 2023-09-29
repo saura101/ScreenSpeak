@@ -33,7 +33,7 @@ const JoinCall = () => {
       <div className="video-screen">
         <Room />
       </div>
-      <div className="controls">
+      {/* <div className="controls">
         <button
           onClick={toggleAudio}
           className={`control-button ${isAudioMuted ? "muted" : ""}`}
@@ -49,7 +49,7 @@ const JoinCall = () => {
         >
           {isPaused ? <FaPlay /> : <FaPause />}
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };

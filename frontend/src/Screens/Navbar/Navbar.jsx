@@ -1,18 +1,22 @@
 import "./Navbar.css"; // You'll create this CSS file in the next step
 import { useSocket } from "../../socket";
 import React from "react";
-
-
+import { useUser } from "../../socket";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
-
-
-   const {socket} = useSocket();
-  function connect() {
-    socket.connect();
-    console.log(socket);
-    // socket.emit("join-call",{roomID: "1",emailID : "piyushgarg@toph.com"});
-    // console.log("hello");
+  const { socket } = useSocket();
+  const { User, setUser } = useUser();
+  console.log(User);
+  const navigate = useNavigate();
+  function joinCall() {
+    if (User) {
+      socket.connect();
+      console.log(User);
+      socket.emit("join-call", { roomID: "1", emailID: "piyushgarg@toph.com" });
+    } else {
+      navigate("/login");
+    }
   }
 
   function disconnect() {
@@ -36,7 +40,7 @@ function Navbar() {
         </span>
       </div>
       <div className="right-content">
-        <div className="item" onClick={connect}>
+        <div className="item" onClick={joinCall}>
           Join a call
         </div>
         <div className="item" onClick={disconnect}>
@@ -44,7 +48,7 @@ function Navbar() {
         </div>
 
         <a className="button" href="/login">
-          Sign Up
+          Getting Started
         </a>
       </div>
     </div>
