@@ -4,8 +4,8 @@ import App from "./App.jsx";
 import { SocketProvider, UserProvider } from "./socket";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./Screens/Login/Login.jsx";
+import JoinRoom from "./JoinRoom.jsx";
 import JoinCall from "./Screens/JoinCall/JoinCall.jsx";
-import Room from "./room.jsx";
 
 const router = createBrowserRouter([
   {
@@ -18,7 +18,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/joincall",
-    element: <JoinCall />,
+    element: <JoinCall/>
+  },
+  {
+    path: "/joinRoom",
+    element: <JoinRoom/>
   },
 ]);
 

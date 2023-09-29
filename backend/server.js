@@ -75,6 +75,11 @@ io.on("connection", (socket) => {
         socket.to(to).emit("nego-final",{ ans }); 
     });
 
+    socket.on("get-rooms",()=>{
+        data=roomidToUserMapping;
+        socket.to(socket.id).emit("all-rooms",{data});
+    });
+
 });
   
 
