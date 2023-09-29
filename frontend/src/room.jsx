@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSocket } from "./socket";
+import { useSocket,useUser } from "./socket";
 import ReactPlayer from "react-player";
 import "./room.css";
 
@@ -8,13 +8,15 @@ let peer = null;
 function Room() {
 
     const { socket } = useSocket();
+    const {User} = useUser();
+
     console.log(socket);
     console.log(socket.id);
     //stream state
     const [myStream, setMyStream] = useState(null);
     const [remoteStream, setRemoteStream] = useState();
     const [remoteSocket, setRemoteSocket] = useState(null);
-    const [remoteEmail, setRemoteEmail] = useState(null);
+    const [remoteName, setRemoteName] = useState(null);
     
     //creating Peer WebRTC connection
     
@@ -44,14 +46,16 @@ function Room() {
         const {emailID, name, id} = data;
         alert(`${name} email: ${emailID} wants to join`);
         setRemoteSocket(id);
-        setRemoteEmail(emailID);
+        //setRemoteEmail(emailID);
+        setRemoteName(name);
         await makeCall(emailID);
     }
 
     async function handleIncomingCall(data) {
-        const { from, offer, id} = data;
+        const { from, offer, id, myName } = data;
         setRemoteSocket(id);
-        setRemoteEmail(from);
+        //setRemoteEmail(from);
+        setRemoteName(myName);
         console.log(`incoming call from ${from}`,offer);
         await answerCall(offer,from);
     }
@@ -167,7 +171,7 @@ function Room() {
         <h4>{remoteSocket ? "connected" : "no one in room"}</h4>
         <div className="video-call-container">
           {myStream && (
-            <div className="outgoing-video">
+            <div className="outgoing-video vid">
               <ReactPlayer
                 url={myStream}
                 width="100%"
@@ -175,10 +179,11 @@ function Room() {
                 playing
                 muted
               />
+              <span className="user-name">{User.name}</span>
             </div>
           )}
           {remoteStream && (
-            <div className="incoming-video">
+            <div className="incoming-video vid">
               <ReactPlayer
                 url={remoteStream}
                 width="100%"
@@ -186,6 +191,7 @@ function Room() {
                 playing
                 muted
               />
+              <span className="user-name">{remoteName}</span>
             </div>
           )}
           {/* <video id="remoteVideo" autoPlay></video> */}
