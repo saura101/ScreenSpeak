@@ -24,10 +24,10 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <UserProvider>
-      <SocketProvider>
+    <SocketProvider>
+      <UserProvider>
         <RouterProvider router={router} />
-      </SocketProvider>
-    </UserProvider>
+      </UserProvider>
+    </SocketProvider>
   </React.StrictMode>
 );
