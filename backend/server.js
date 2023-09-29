@@ -21,6 +21,7 @@ const io = new Server(httpServer, {
 
 const emailToSocketMapping = new Map();
 const socketToEmailMapping = new Map();
+const roomidToUserMapping = new Map();
 
 io.on("connection", (socket) => {
     console.log(socket.connected);
@@ -28,6 +29,14 @@ io.on("connection", (socket) => {
 
     socket.on("join-call",(data) => {
         const { roomID, emailID, name } = data;
+        if(roomidToUserMapping.has(roomID)) {
+            if(roomidToUserMapping.get(roomID) === 2) {
+                //room full
+                return;
+            }
+            roomidToUserMapping.set(roomID,2);
+        }
+        roomidToUserMapping.set(roomID,1);
         console.log(`user ${name} and ${emailID} joined the room ${roomID}`);
         emailToSocketMapping.set(emailID, socket.id);
         socketToEmailMapping.set(socket.id, emailID);

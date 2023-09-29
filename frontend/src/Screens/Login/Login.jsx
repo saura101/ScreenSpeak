@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import "./Login.css";
-import { useSocket } from "../../socket";
+import { useSocket ,useUser} from "../../socket";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
 
   const { socket } = useSocket();
+  const {User,setUser} = useUser();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -25,8 +26,11 @@ function Login() {
   const handleJoinCall = async() => {
     console.log(name);
     console.log(email);
-    await socket.connect();
-    socket.emit("join-call", { roomID: "1", emailID: email, name: name });
+    setUser({name:name ,email:email});
+    console.log("login",User);
+    navigate("/");
+    // await socket.connect();
+    // socket.emit("join-call", { roomID: "1", emailID: email, name: name });
   };
 
   function handleCallJoined({ roomID }) {
@@ -50,13 +54,13 @@ function Login() {
 
     // socket.on("connect", onConnect);
     // socket.on("disconnect", onDisconnect);
-    socket.on("joined-call", handleCallJoined);
+    // socket.on("joined-call", handleCallJoined);
 
     //cleanup
     return function () {
       // socket.off("connect", onConnect);
       // socket.off("disconnect", onDisconnect);
-      socket.off("joined-call", handleCallJoined);
+      // socket.off("joined-call", handleCallJoined);
     };
   }, [socket,handleCallJoined]);
 
