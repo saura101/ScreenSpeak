@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import "./Login.css";
 import { useSocket ,useUser} from "../../socket";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../../socket";
+// import user, { setUser } from "../User/User";
 
 function Login() {
-
   const { socket } = useSocket();
-  const {User,setUser} = useUser();
-
+  const { User, setUser } = useUser();
+  
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [roomid, setRoomid] = useState("");
@@ -23,7 +24,7 @@ function Login() {
   //use navigate
   const navigate = useNavigate();
 
-  const handleJoinCall = async() => {
+  const handleJoinCall = async () => {
     console.log(name);
     console.log(email);
     setUser({name:name ,email:email});
@@ -37,13 +38,12 @@ function Login() {
     console.log("user joined room");
     //redirect user to the videocall page
     console.log(socket.connected);
-    if(socket.connected) {
-      navigate("/joincall");
+    if (socket.connected) {
+      // navigate("/joincall");
     }
   }
 
   React.useEffect(() => {
-
     function onConnect() {
       setIsConnected(true);
     }
@@ -62,7 +62,7 @@ function Login() {
       // socket.off("disconnect", onDisconnect);
       // socket.off("joined-call", handleCallJoined);
     };
-  }, [socket,handleCallJoined]);
+  }, [socket, handleCallJoined]);
 
   return (
     <div className="login-container">
@@ -88,7 +88,7 @@ function Login() {
         />
       </div>
       <a className="join-button" onClick={handleJoinCall}>
-        Join Call
+        Onboard
       </a>
     </div>
   );

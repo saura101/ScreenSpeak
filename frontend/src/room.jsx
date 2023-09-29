@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSocket } from "./socket";
 import ReactPlayer from "react-player";
-
+import "./room.css";
 
 let peer = null;
 // let remoteVideo = document.getElementById("remoteVideo");
@@ -163,27 +163,40 @@ function Room() {
     }
 
     return (
-        <div className="room">
-            <h1>call room</h1>
-            <h4>{remoteSocket ? "connected" : "no one in room" }</h4>
-            <div className="stream-cont">
-            {
-                    myStream && 
-                    <div className="stream">
-                        <ReactPlayer url={myStream} playing muted/>
-                    </div>
-                }
-                {
-                    remoteStream && 
-                    <div className="stream">
-                        <ReactPlayer url={remoteStream} playing muted/>
-                    </div>
-                }
-                {/* <video id="remoteVideo" autoPlay></video> */}
+      <div className="room">
+        <h4>{remoteSocket ? "connected" : "no one in room"}</h4>
+        <div className="video-call-container">
+          {myStream && (
+            <div className="outgoing-video">
+              <ReactPlayer
+                url={myStream}
+                width="100%"
+                height="100%"
+                playing
+                muted
+              />
             </div>
-            <button onClick={handleCall} id="call">call</button>
-            <button onClick={handleSend} id="call">send</button>
+          )}
+          {remoteStream && (
+            <div className="incoming-video">
+              <ReactPlayer
+                url={remoteStream}
+                width="100%"
+                height="100%"
+                playing
+                muted
+              />
+            </div>
+          )}
+          {/* <video id="remoteVideo" autoPlay></video> */}
         </div>
+        <button onClick={handleCall} id="call">
+          call
+        </button>
+        <button onClick={handleSend} id="call">
+          send
+        </button>
+      </div>
     );
 }
 

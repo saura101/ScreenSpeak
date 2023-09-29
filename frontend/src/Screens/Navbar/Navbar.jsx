@@ -4,8 +4,6 @@ import React from "react";
 import { useUser } from "../../socket";
 import { useNavigate } from "react-router-dom";
 
-
-
 function Navbar() {
 
 
@@ -82,9 +80,8 @@ function Navbar() {
         <div className="item" onClick={host_call}>
           Host a call
         </div>
-
         <a className="button" href="/login">
-          Sign Up
+          Getting Started
         </a>
       </div>
     </div>
