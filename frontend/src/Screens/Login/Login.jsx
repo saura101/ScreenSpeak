@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import "./Login.css";
 import { useSocket ,useUser} from "../../socket";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../../socket";
-// import user, { setUser } from "../User/User";
+//import { useUser } from "../../socket";
 
 function Login() {
   const { socket } = useSocket();
