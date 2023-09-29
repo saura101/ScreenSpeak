@@ -6,6 +6,7 @@ import { useSocket } from "./socket";
 import HomePage from "./Screens/HomePage/HomePage";
 // import Login from "./Screens/Login/Login";
 // import { Route, Routes } from "react-router-dom";
+import JoinRoom from "./JoinRoom";
 
 function App() {
   const { socket } = useSocket();
@@ -34,7 +35,7 @@ function App() {
 
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <HomePage />
     </>
   );

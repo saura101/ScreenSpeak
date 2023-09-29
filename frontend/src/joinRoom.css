@@ -1,0 +1,51 @@
+/* JoinRoom.css */
+
+.join-room-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+}
+
+.card-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.card {
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.card-image {
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+}
+
+.card-info {
+  padding: 16px;
+}
+
+h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.joinRoomButton {
+  background-color: #ffaa00;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.joinRoomButton:hover {
+  background-color: #87add7;
+}
