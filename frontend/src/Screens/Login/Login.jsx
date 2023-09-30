@@ -64,40 +64,40 @@ function Login() {
   }, [socket, handleCallJoined]);
 
   return (
-    <div class="container">
-      <div class="card">
-        <div class="card-image">
-          {/* <h2 class="card-heading">
+    <div className="container">
+      <div className="card">
+        <div className="card-image">
+          {/* <h2 className="card-heading">
             Get started
             <small>Let us create your account</small>
           </h2> */}
         </div>
-        <form class="card-form">
-          <div class="input">
+        <form className="card-form">
+          <div className="input">
             <input
               type="text"
-              class="input-field"
+              className="input-field"
               id="name"
               value={name}
               onChange={handleNameChange}
               required
             />
-            <label class="input-label">Full name</label>
+            <label className="input-label">Full name</label>
           </div>
-          <div class="input">
+          <div className="input">
             <input
               type="text"
-              class="input-field"
+              className="input-field"
               id="email"
               value={email}
               onChange={handleEmailChange}
               required
             />
-            <label class="input-label">Email</label>
+            <label className="input-label">Email</label>
           </div>
 
-          <div class="action">
-            <button class="action-button" onClick={handleJoinCall}>
+          <div className="action">
+            <button className="action-button" onClick={handleJoinCall}>
               Get started
             </button>
           </div>

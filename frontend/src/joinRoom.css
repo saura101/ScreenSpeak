@@ -13,15 +13,16 @@
   gap: 20px;
 }
 
-.card {
-  width: 300px;
+.room_card {
+  width: 300px ;
   border: 1px solid #ccc;
   border-radius: 8px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
   overflow: hidden;
+  align-content: center;
 }
 
-.card-image {
+.room_card-image {
   height: 200px;
   background-size: cover;
   background-position: center;

@@ -33,6 +33,11 @@ function Card(props) {
     }
   }
 
+  function getBgImage() {
+    let n = 1+ Math.floor(Math.random()*6);
+    return "url('bg"+n+".jpg')";
+  }
+
   React.useEffect(() => {
     socket.on("joined-call", handleCallJoined);
 
@@ -43,12 +48,11 @@ function Card(props) {
   }, [socket, handleCallJoined]);
 
   return (
-    <div className="card">
+    <div className="room_card">
       <div
-        className="card-image"
-        style={{
-          backgroundImage:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBsmqYOIahn6zlljGMCs3OQXXRw8Taan8CMygcUejv&s",
+        className="room_card-image"
+        style={{ 
+          backgroundImage : getBgImage()
         }}
       ></div>
       <div className="card-info">
@@ -104,7 +108,6 @@ function JoinRoom() {
     <div className="join-room-container">
       <h1>Join a Room</h1>
       <div className="card-container">
-        <span>hello</span>
         {roomData.map((room, index) => (
           <Card key={index} roomName={room} />
         ))}

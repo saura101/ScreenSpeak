@@ -8,7 +8,8 @@ body {
 	font-family: "DM Sans", sans-serif;
 	line-height: 1.5;
 	background-color: #f1f3fb;
-	padding: 0 2rem;
+	/* padding: 0 2rem; */
+	margin : 0;
 }
 
 img {
@@ -38,7 +39,7 @@ input {
 	overflow: hidden;
 	padding-bottom: 65%;
 	/* background-image: url('https://assets.codepen.io/285131/coffee_1.jpg'); */
-  background-image: url("/login.jpg");
+  background-image: url("/bg2.jpg");
 	background-repeat: no-repeat;
 	background-position: 0 5%;
 	position: relative;
