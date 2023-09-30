@@ -1,39 +1,67 @@
-/* Video call container */
-.video-call-container {
+/* Room.css */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+
+.room {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  height: 98vh;
+  background-color: #f2dfff;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+h4 {
+  font-size: 20px;
+}
+
+.video-call-container {
+  width: 100%;
   height: 100%;
-  max-width: 80%;
-  background-color: #ffbaba;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 
-/* Video screen for incoming video */
-.incoming-video {
-  flex: 1;
-  max-width: 50%;
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  margin: 20px;
-  background-color: aqua;
-}
-
-/* Video screen for outgoing video */
-.outgoing-video {
-  flex: 1;
-  max-width: 50%;
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  margin: 20px;
-  background-color: #f7f770;
-}
-.user-name {
-  color:#fff;
-  font-size: 1.5rem;
-  position: absolute;
-  bottom:0;
-}
 .vid {
-  text-align: center;
+  display: inline-block;
   position: relative;
+}
+
+.user-name {
+  font-family: "DM Sans", sans-serif;
+  display: none;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  padding: 5px;
+  font-size: 28px;
+  text-align: center;
+  font-weight: bold;
+  text-shadow: 3px 3px #000000;
+}
+
+.vid:hover .user-name {
+  display: block;
+}
+
+button#call,
+button#send {
+  margin: 20px;
+  padding: 10px 20px;
+  background-color: #ffb700;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 20px;
+}
+
+button#call:hover,
+button#send:hover {
+  background-color: #a5d0ff;
 }

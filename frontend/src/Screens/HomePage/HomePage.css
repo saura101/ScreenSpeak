@@ -1,28 +1,26 @@
-
-.body{
-    margin: 0px;
+.body {
+  margin: 0px;
 }
 .mainScreen {
   display: flex;
   justify-content: space-around;
+  background-image: url("https://cdn.pixabay.com/photo/2019/04/10/11/56/watercolor-4116932_1280.png");
+  background-repeat: no-repeat, repeat;
 }
-.leftSide {
-  background-color: #ffffff;
-  margin: 40px;
-  width: 50%;
-  height: 400px;
+.leftSidee {
+  /* margin: 40px; */
+  width: 60%;
+  height: 100vh;
 }
-.rightSide {
-  background-image: url("/bg-image.jpg");
-  background-size: cover; 
-  background-repeat: no-repeat; 
-  color: white;
-  margin: 10px 20px;
-  width: 50%;
-  height: 400px;
+.rightSidee {
+  width: 40%;
+  background-image: url("/atchaLagRa.jpg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-blend-mode:overlay;
 }
-.Scrolltext{
-    color: orange;
-    font-size: larger;
-    font-weight: bolder;
+.Scrolltext {
+  color: orange;
+  font-size: larger;
+  font-weight: bolder;
 }

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import "./Login.css";
-import { useSocket ,useUser} from "../../socket";
+import { useSocket, useUser } from "../../socket";
 import { useNavigate } from "react-router-dom";
 //import { useUser } from "../../socket";
 
 function Login() {
   const { socket } = useSocket();
   const { User, setUser } = useUser();
-  
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [roomid, setRoomid] = useState("");
@@ -26,8 +26,8 @@ function Login() {
   const handleJoinCall = async () => {
     console.log(name);
     console.log(email);
-    setUser({name:name ,email:email});
-    console.log("login",User);
+    setUser({ name: name, email: email });
+    console.log("login", User);
     navigate("/");
     // await socket.connect();
     // socket.emit("join-call", { roomID: "1", emailID: email, name: name });
@@ -64,31 +64,45 @@ function Login() {
   }, [socket, handleCallJoined]);
 
   return (
-    <div className="login-container">
-      <h1>Enter Your Details</h1>
-      <div className="input-container">
-        <label>Name:</label>
-        <input
-          type="text"
-          id="name"
-          value={name}
-          onChange={handleNameChange}
-          placeholder="Enter your name"
-        />
+    <div class="container">
+      <div class="card">
+        <div class="card-image">
+          {/* <h2 class="card-heading">
+            Get started
+            <small>Let us create your account</small>
+          </h2> */}
+        </div>
+        <form class="card-form">
+          <div class="input">
+            <input
+              type="text"
+              class="input-field"
+              id="name"
+              value={name}
+              onChange={handleNameChange}
+              required
+            />
+            <label class="input-label">Full name</label>
+          </div>
+          <div class="input">
+            <input
+              type="text"
+              class="input-field"
+              id="email"
+              value={email}
+              onChange={handleEmailChange}
+              required
+            />
+            <label class="input-label">Email</label>
+          </div>
+
+          <div class="action">
+            <button class="action-button" onClick={handleJoinCall}>
+              Get started
+            </button>
+          </div>
+        </form>
       </div>
-      <div className="input-container">
-        <label>Email:</label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={handleEmailChange}
-          placeholder="Enter your email"
-        />
-      </div>
-      <a className="join-button" onClick={handleJoinCall}>
-        Onboard
-      </a>
     </div>
   );
 }

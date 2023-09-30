@@ -8,6 +8,7 @@
   color: rgba(54, 54, 54, 0.696);
   padding: 10px 20px;
    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+   background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);
 }
 
 /* Style the left content (title) */
@@ -30,7 +31,7 @@
 
 .button {
   background-color: #ff6600;
-  color: white;
+  color: rgb(0, 0, 0);
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
@@ -42,5 +43,5 @@
 /* Hover effect for items and button */
 .item:hover,
 .button:hover {
-    color: #dbf340;
+    color: #ffffff;
 }

@@ -205,7 +205,7 @@ function Navbar() {
     <div className="navbar">
       <div className="left-content">
         <span className="title">
-          Screen<b>Share</b>
+          Screen<b>Speaks</b>
         </span>
       </div>
       <div className="right-content">
