@@ -21,6 +21,7 @@ const io = new Server(httpServer, {
 
 const emailToSocketMapping = new Map();
 const socketToEmailMapping = new Map();
+const emailToNameMapping = new Map();
 const roomidToUserMapping = new Map();
 
 io.on("connection", (socket) => {
@@ -29,6 +30,7 @@ io.on("connection", (socket) => {
 
     socket.on("join-call",(data) => {
         const { roomID, emailID, name } = data;
+        emailToNameMapping.set(emailID,name);
         if(roomidToUserMapping.has(roomID)) {
             if(roomidToUserMapping.get(roomID) === 2) {
                 //room full
@@ -52,8 +54,9 @@ io.on("connection", (socket) => {
         const {emailID, offer } = data;
         const socketID = emailToSocketMapping.get(emailID);
         const fromEmail = socketToEmailMapping.get(socket.id);
+        const myName = emailToNameMapping.get(fromEmail);
         let id = socket.id;
-        socket.to(socketID).emit("incoming-call", { from : fromEmail , offer, id});
+        socket.to(socketID).emit("incoming-call", { from : fromEmail , offer, id, myName });
     });
 
     socket.on("call-accepted",(data) => {
@@ -73,8 +76,15 @@ io.on("connection", (socket) => {
     });
 
     socket.on("get-rooms",()=>{
-        data=roomidToUserMapping;
-        socket.to(socket.id).emit("all-rooms",{data});
+        const data = [];
+        roomidToUserMapping.forEach((values, keys) => {
+            data.push(keys);
+            console.log(keys);
+        });
+        console.log(data);
+        //console.log("get-rooms triggered");
+        console.log(socket.id);
+        io.to(socket.id).emit("all-rooms",{ rooms : data });
     });
 
 });

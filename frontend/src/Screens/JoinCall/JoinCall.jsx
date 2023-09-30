@@ -11,11 +11,14 @@ import {
   FaPhone,
 } from "react-icons/fa";
 import "./JoinCall.css";
+import { useLocation } from "react-router-dom";
 
 const JoinCall = () => {
   const [isAudioMuted, setIsAudioMuted] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
 
+  const { room } = useLocation();
+  console.log(room);
   const toggleAudio = () => {
     //setIsAudioMuted(!isAudioMuted);
   };
@@ -30,6 +33,7 @@ const JoinCall = () => {
 
   return (
     <div className="video-call">
+    <span>{room}</span>
       <div className="video-screen">
         <Room />
       </div>

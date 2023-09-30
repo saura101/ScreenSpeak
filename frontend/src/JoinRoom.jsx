@@ -1,27 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import "./joinRoom.css";
-import { useSocket } from "./socket";
+import { useUser, useSocket } from "./socket";
+import { useNavigate } from "react-router-dom";
+
 // Card component
+function Card(props) {
+  const { User } = useUser();
+  const { socket } = useSocket();
+  const navigate = useNavigate();
 
-
-
-function Card({ backgroundImage, roomName }) {
   async function join_call(roomName) {
     if (User) {
       console.log(User);
-      if (!socket.connected) {
-        await socket.connect();
-        socket.emit("join-call", {
-          roomID: roomName,
-          emailID: User.email,
-          name: User.name,
-        });
-      }
+      //await socket.connect();
+      socket.emit("join-call", {
+        roomID: roomName,
+        emailID: User.email,
+        name: User.name,
+      });
       console.log(socket);
     } else {
       console.log("no user");
     }
   }
+
+  function handleCallJoined({ roomID }) {
+    console.log("user joined room");
+    //redirect user to the videocall page
+    console.log(socket.connected);
+    if (socket.connected) {
+      navigate("/joincall",{room : roomID});
+    }
+  }
+
+  React.useEffect(() => {
+    socket.on("joined-call", handleCallJoined);
+
+    //cleanup
+    return function () {
+      socket.off("joined-call", handleCallJoined);
+    };
+  }, [socket, handleCallJoined]);
+
   return (
     <div className="card">
       <div
@@ -32,10 +52,13 @@ function Card({ backgroundImage, roomName }) {
         }}
       ></div>
       <div className="card-info">
-        <h2>{roomName}</h2>
-        <button className="joinRoomButton" onClick={()=>{
-            join_call(roomName);
-        }} >
+        <h2>{props.roomName}</h2>
+        <button
+          className="joinRoomButton"
+          onClick={() => {
+            join_call(props.roomName);
+          }}
+        >
           Join Room
         </button>
       </div>
@@ -45,27 +68,45 @@ function Card({ backgroundImage, roomName }) {
 
 function JoinRoom() {
   const { socket } = useSocket();
-  socket.emit("get-rooms");
+  console.log(socket);
 
-  const roomData = [];
-  function handleAllRooms(data) {
-    data.forEach((values, keys) => {
-      roomData.push(keys);
-      console.log(keys);
-    });
-  }
+  //room info
+  const [roomData, setRoomData] = useState([]);
+  //const roomData = [];
+
   React.useEffect(() => {
+    if (roomData.length === 0) {
+      socket.emit("get-rooms");
+    }
+    async function handleAllRooms(data) {
+      const { rooms } = data;
+      console.log("imcoming array", rooms);
+      console.log("all-rooms triggered");
+      setRoomData((prevRoomData) => [...prevRoomData, ...rooms]);
+      console.log("roomdata", roomData);
+    }
     socket.on("all-rooms", handleAllRooms);
-  }, []);
+
+    return function () {
+      socket.off("all-rooms", handleAllRooms);
+    };
+  }, [socket, roomData]);
+
+  // React.useEffect(() => {
+  //   socket.on("all-rooms", handleAllRooms);
+
+  //   return function () {
+  //     socket.off("all-rooms", handleAllRooms);
+  //   }
+  // }, [handleAllRooms]);
+
   return (
     <div className="join-room-container">
       <h1>Join a Room</h1>
       <div className="card-container">
+        <span>hello</span>
         {roomData.map((room, index) => (
-          <Card
-            key={index}
-            roomName={room}
-          />
+          <Card key={index} roomName={room} />
         ))}
       </div>
     </div>

@@ -152,6 +152,16 @@ function Navbar() {
   //use navigate
   const navigate = useNavigate();
 
+  async function join_call() {
+    if (User) {
+      console.log(User);
+      await socket.connect();
+      navigate("/joinRoom");
+    } else {
+      console.log("no user");
+    } 
+  }
+
   async function host_call() {
     if (User) {
       console.log(User);
@@ -178,7 +188,7 @@ function Navbar() {
     //redirect user to the videocall page
     console.log(socket.connected);
     if (socket.connected) {
-      navigate("/joincall");
+      navigate("/joincall",{room : roomID});
     }
   }
 
@@ -199,7 +209,7 @@ function Navbar() {
         </span>
       </div>
       <div className="right-content">
-        <a className="item" href="/JoinRoom">
+        <a className="item" onClick={join_call}>
           Join a call
         </a>
         <div className="item" onClick={host_call}>

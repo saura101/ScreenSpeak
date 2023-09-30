@@ -27,3 +27,13 @@
   margin: 20px;
   background-color: #f7f770;
 }
+.user-name {
+  color:#fff;
+  font-size: 1.5rem;
+  position: absolute;
+  bottom:0;
+}
+.vid {
+  text-align: center;
+  position: relative;
+}
