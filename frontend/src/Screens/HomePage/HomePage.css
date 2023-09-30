@@ -15,7 +15,7 @@
 }
 .rightSidee {
   width: 40%;
-  background-image: url("/bg1.jpg");
+  background-image: url("/bghome.png");
   background-repeat: no-repeat;
   background-size: contain;
   background-blend-mode:overlay;
