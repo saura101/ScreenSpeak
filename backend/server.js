@@ -76,8 +76,15 @@ io.on("connection", (socket) => {
     });
 
     socket.on("get-rooms",()=>{
-        data=roomidToUserMapping;
-        socket.to(socket.id).emit("all-rooms",{data});
+        const data = [];
+        roomidToUserMapping.forEach((values, keys) => {
+            data.push(keys);
+            console.log(keys);
+        });
+        console.log(data);
+        //console.log("get-rooms triggered");
+        console.log(socket.id);
+        io.to(socket.id).emit("all-rooms",{ rooms : data });
     });
 
 });
