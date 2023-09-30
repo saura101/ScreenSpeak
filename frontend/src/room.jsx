@@ -169,9 +169,15 @@ function Room() {
     return (
       <div className="room">
         <h4>{remoteSocket ? "connected" : "no one in room"}</h4>
-        <div className="video-call-container">
+        <div
+          className="video-call-container"
+          style={{ position: "relative"}}
+        >
           {myStream && (
-            <div className="outgoing-video vid">
+            <div
+              className="outgoing-video vid"
+              style={{ width: "90%", height: "90%" }}
+            >
               <ReactPlayer
                 url={myStream}
                 width="100%"
@@ -183,7 +189,10 @@ function Room() {
             </div>
           )}
           {remoteStream && (
-            <div className="incoming-video vid">
+            <div
+              className="incoming-video vid"
+              style={{ width: "90%", height: "90%" }}
+            >
               <ReactPlayer
                 url={remoteStream}
                 width="100%"
@@ -196,12 +205,14 @@ function Room() {
           )}
           {/* <video id="remoteVideo" autoPlay></video> */}
         </div>
-        <button onClick={handleCall} id="call">
-          call
-        </button>
-        <button onClick={handleSend} id="call">
-          send
-        </button>
+        <div>
+          <button onClick={handleCall} id="call">
+            send video
+          </button>
+          <button onClick={handleSend} id="call">
+            recieve video
+          </button>
+        </div>
       </div>
     );
 }

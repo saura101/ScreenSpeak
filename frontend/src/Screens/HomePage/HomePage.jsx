@@ -3,10 +3,6 @@ import "./HomePage.css";
 import Typed from "typed.js";
 
 const HomePage = () => {
-  // strings: [
-  //   ,
-  // ],
-  // Create reference to store the DOM element containing the animation
   const el = React.useRef(null);
 
   React.useEffect(() => {
@@ -17,6 +13,7 @@ const HomePage = () => {
         "one call at a time.",
       ],
       typeSpeed: 50,
+      loop: true,
     });
 
     return () => {
@@ -27,7 +24,7 @@ const HomePage = () => {
 
   return (
     <div className="mainScreen">
-      <div className="leftSide">
+      <div className="leftSidee">
         <h4>
           Unlock the power of face-to-face connections, no matter the distance.
           Our video calls bridge gaps and build bonds, connecting you with loved
@@ -37,7 +34,7 @@ const HomePage = () => {
         </h4>
         <span ref={el} className="Scrolltext" />
       </div>
-      <div className="rightSide"></div>
+      <div className="rightSidee"></div>
     </div>
   );
 };
