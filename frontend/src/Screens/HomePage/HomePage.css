@@ -6,6 +6,7 @@
   justify-content: space-around;
   background-image: url("https://cdn.pixabay.com/photo/2019/04/10/11/56/watercolor-4116932_1280.png");
   background-repeat: no-repeat, repeat;
+  padding : 15px;
 }
 .leftSidee {
   /* margin: 40px; */
@@ -14,7 +15,7 @@
 }
 .rightSidee {
   width: 40%;
-  background-image: url("/atchaLagRa.jpg");
+  background-image: url("/bg1.jpg");
   background-repeat: no-repeat;
   background-size: contain;
   background-blend-mode:overlay;
