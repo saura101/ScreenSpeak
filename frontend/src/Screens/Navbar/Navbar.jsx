@@ -189,7 +189,7 @@ function Navbar() {
     console.log(socket.connected);
     if (socket.connected) {
       //navigate("/joincall",{room : roomID});
-      navigate("/joincall", { state: { roomID } })
+      navigate("/joincall", { state: { roomID } });
     }
   }
 
