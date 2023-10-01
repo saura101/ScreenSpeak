@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
-import { SocketProvider, UserProvider } from "./socket";
+import { SocketProvider, UserProvider } from "./socket.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./Screens/Login/Login.jsx";
 import JoinRoom from "./JoinRoom.jsx";
