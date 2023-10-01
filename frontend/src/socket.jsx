@@ -28,7 +28,7 @@ export const UserProvider = (props) => {
 
 export const SocketProvider = (props) => {
   const URL =
-    process.env.NODE_ENV === "production" ? undefined : "http://127.0.0.1:3000";
+    process.env.NODE_ENV === "production" ? undefined : "https://screenspeaks-server.onrender.com";
   const name = "aditya";
   const socket = io(URL, {
     autoConnect: false,
