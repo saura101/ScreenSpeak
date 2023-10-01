@@ -17,8 +17,9 @@ const JoinCall = () => {
   const [isAudioMuted, setIsAudioMuted] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
 
-  const { room } = useLocation();
-  console.log(room);
+  const { state } = useLocation();
+
+  console.log(state);
   const toggleAudio = () => {
     //setIsAudioMuted(!isAudioMuted);
   };
@@ -33,8 +34,8 @@ const JoinCall = () => {
 
   return (
     <div className="video-call">
-    <span>{room}</span>
       <div className="video-screen">
+        <span className="roomName">{state.roomID}</span>
         <Room />
       </div>
       {/* <div className="controls">
