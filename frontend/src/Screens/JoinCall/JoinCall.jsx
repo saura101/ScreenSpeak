@@ -35,7 +35,7 @@ const JoinCall = () => {
   return (
     <div className="video-call">
       <div className="video-screen">
-        <span>{state.roomID}</span>
+        <span className="roomName">{state.roomID}</span>
         <Room />
       </div>
       {/* <div className="controls">
