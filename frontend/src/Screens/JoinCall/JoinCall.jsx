@@ -19,7 +19,7 @@ const JoinCall = () => {
 
   const { state } = useLocation();
 
-  console.log(state);
+  //console.log(state);
   const toggleAudio = () => {
     //setIsAudioMuted(!isAudioMuted);
   };
