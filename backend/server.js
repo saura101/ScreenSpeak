@@ -1,7 +1,7 @@
 import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
-import bodyParser from "body-parser";
+//import bodyParser from "body-parser";
 import cors from "cors";
 
 const app=express();
