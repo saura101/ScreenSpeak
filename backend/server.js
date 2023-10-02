@@ -14,7 +14,7 @@ const httpServer = createServer(app);
 const io = new Server(httpServer, {
     // options
     cors: {
-        origin: "https://extraordinary-crumble-2b10dc.netlify.app/",
+        origin: "https://extraordinary-crumble-2b10dc.netlify.app",
         methods: ["GET", "POST"]
       }
   });
