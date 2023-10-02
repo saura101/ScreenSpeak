@@ -127,7 +127,6 @@ function haiku() {
       "sun",
       "wood",
       "dream",
-      "cherry",
       "tree",
       "fog",
       "frost",
