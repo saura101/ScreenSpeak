@@ -76,8 +76,14 @@ function JoinRoom() {
   console.log(socket);
 
   //room info
-  const [roomData, setRoomData] = useState([]);
+  const [roomData, setRoomData] = useState([]);//use state
+  const [err,setErr] = useState(null);
   //const roomData = [];
+
+  function handleRoomFull() {
+    console.log("room full!");
+    setErr("ROOM FULL!");
+  }
 
   React.useEffect(() => {
     if (roomData.length === 0) {
@@ -91,9 +97,10 @@ function JoinRoom() {
       console.log("roomdata", roomData);
     }
     socket.on("all-rooms", handleAllRooms);
-
+    socket.on("room-full",handleRoomFull);
     return function () {
       socket.off("all-rooms", handleAllRooms);
+      socket.off("room-full",handleRoomFull);
     };
   }, [socket, roomData]);
 
@@ -108,6 +115,7 @@ function JoinRoom() {
   return (
     <div className="join-room-container">
       <h1 className="JoinRoomHeading">Join a Room</h1>
+      <h2>{err}</h2>
       <div className="card-container">
         {roomData.map((room, index) => (
           <Card key={index} roomName={room} />

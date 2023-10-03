@@ -167,8 +167,9 @@ function Room(props) {
       const tracks = myStream.getTracks();
       tracks.forEach((track) => track.stop());
       setMyStream(null); // Clear the stream state
-      socket.disconnect();
       console.log("Room Disconnected");
+      socket.emit("room-diconnect",{ room : props.roomID, email : User.email });
+      socket.disconnect();
     }
   }
 
@@ -216,7 +217,6 @@ function Room(props) {
               width="100%"
               height="100%"
               playing
-              muted
             />
             <span className="user-name">{remoteName}</span>
           </div>
