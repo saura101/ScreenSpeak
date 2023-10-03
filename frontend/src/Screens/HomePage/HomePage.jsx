@@ -34,7 +34,9 @@ const HomePage = () => {
         </h4>
         <span ref={el} className="Scrolltext" />
       </div>
-      <div className="rightSidee"></div>
+      <div className="rightSidee">
+        <img alt="" src="/bghome.png" />
+      </div>
     </div>
   );
 };

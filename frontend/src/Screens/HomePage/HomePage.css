@@ -1,28 +1,51 @@
+@import url("https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@600&family=Sacramento&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@600&family=Roboto+Slab:wght@600&family=Sacramento&display=swap");
+
 .body {
   margin: 0px;
+  font-family: "Roboto Slab", serif;
+  
 }
 .mainScreen {
   display: flex;
   justify-content: space-around;
   background-image: url("https://cdn.pixabay.com/photo/2019/04/10/11/56/watercolor-4116932_1280.png");
   background-size: cover;
-  padding : 15px;
+  padding: 15px;
+  height: 100vh;
 }
 .leftSidee {
   /* margin: 40px; */
   width: 60%;
-  height: 100vh;
   padding-right: 10%;
+  float: left;
 }
 .rightSidee {
   width: 40%;
-  background-image: url("/bghome.png");
+  /* background-image: url("/bghome.png");
   background-repeat: no-repeat;
   background-size: contain;
-  background-blend-mode:overlay;
+  background-blend-mode: overlay; */
+  float: left;
 }
 .Scrolltext {
   color: orange;
-  font-size: larger;
+  font-size:xx-large;
   font-weight: bolder;
+  font-family: "Pixelify Sans", cursive;
+}
+
+/* Media query for screens 600px wide or less */
+@media (max-width: 600px) {
+  .leftSidee,
+  .rightSidee {
+    width: 100%;
+    float: none;
+  }
+
+  /* To make leftSidee stack above rightSidee, you can use flexbox */
+  .mainScreen {
+    display: flex;
+    flex-direction: column; /* Stack leftSidee above rightSidee */
+  }
 }
