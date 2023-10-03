@@ -5,7 +5,7 @@
   display: flex;
   justify-content: space-around;
   background-image: url("https://cdn.pixabay.com/photo/2019/04/10/11/56/watercolor-4116932_1280.png");
-  background-repeat: no-repeat, repeat;
+  background-size: cover;
   padding : 15px;
 }
 .leftSidee {
