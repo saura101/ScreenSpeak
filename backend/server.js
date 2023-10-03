@@ -32,13 +32,18 @@ io.on("connection", (socket) => {
         const { roomID, emailID, name } = data;
         emailToNameMapping.set(emailID,name);
         if(roomidToUserMapping.has(roomID)) {
+            console.log("has",roomidToUserMapping.get(roomID));
             if(roomidToUserMapping.get(roomID) === 2) {
                 //room full
+                io.to(socket.id).emit("room-full");
                 return;
             }
-            roomidToUserMapping.set(roomID,2);
+            roomidToUserMapping.set(roomID,roomidToUserMapping.get(roomID)+1);
+        } else {
+            roomidToUserMapping.set(roomID,1);
         }
-        roomidToUserMapping.set(roomID,1);
+        //roomidToUserMapping.set(roomID,roomidToUserMapping.get(roomID)+1);
+        console.log(roomidToUserMapping.get(roomID));
         console.log(`user ${name} and ${emailID} joined the room ${roomID}`);
         emailToSocketMapping.set(emailID, socket.id);
         socketToEmailMapping.set(socket.id, emailID);
@@ -85,6 +90,17 @@ io.on("connection", (socket) => {
         //console.log("get-rooms triggered");
         console.log(socket.id);
         io.to(socket.id).emit("all-rooms",{ rooms : data });
+    });
+
+    socket.on("room-diconnect",(data)=> {
+        const { room ,email } = data;
+        roomidToUserMapping.set(room,roomidToUserMapping.get(room)-1);
+        if(roomidToUserMapping.get(room) === 0)
+            roomidToUserMapping.delete(room);
+        emailToNameMapping.delete(email);
+        const soc = emailToSocketMapping(email);
+        emailToSocketMapping.delete(email);
+        socketToEmailMapping.delete(soc);
     });
 
 });
