@@ -216,7 +216,6 @@ function Room(props) {
               width="100%"
               height="100%"
               playing
-              muted
             />
             <span className="user-name">{remoteName}</span>
           </div>
