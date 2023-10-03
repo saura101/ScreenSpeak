@@ -107,7 +107,7 @@ function JoinRoom() {
 
   return (
     <div className="join-room-container">
-      <h1>Join a Room</h1>
+      <h1 className="JoinRoomHeading">Join a Room</h1>
       <div className="card-container">
         {roomData.map((room, index) => (
           <Card key={index} roomName={room} />
