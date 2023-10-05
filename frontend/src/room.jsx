@@ -95,9 +95,9 @@ function Room(props) {
   }
 
   async function handleSend() {
-    peer.addEventListener("negotiationneeded", handleNegotiation);
-    await sendStream();
-    peer.addEventListener("track", handleTrack);
+    // peer.addEventListener("negotiationneeded", handleNegotiation);
+    // await sendStream();
+    //peer.addEventListener("track", handleTrack);
   }
 
   async function handleTrack(event) {
@@ -158,6 +158,8 @@ function Room(props) {
 
   async function handleCall() {
     getUserMediaStream();
+    peer.addEventListener("negotiationneeded", handleNegotiation);
+    //await sendStream();
     console.log("hello ji kaise ho saare");
     //peer.addEventListener("negotiationneeded",handleNegotiation);
   }
@@ -175,11 +177,15 @@ function Room(props) {
 
   React.useEffect(() => {
     peerCheck();
+
+    if(myStream) {
+      sendStream();
+    }
     //cleanup
     return function () {
       peerCheck();
     };
-  }, [remoteSocket]);
+  }, [remoteSocket,myStream]);
 
   async function handleNegotiation() {
     const offer = await peer.createOffer();
@@ -227,9 +233,9 @@ function Room(props) {
         <button onClick={handleCall} id="call">
           send video
         </button>
-        <button onClick={handleSend} id="call">
-          recieve video
-        </button>
+        {/* <button onClick={handleSend} id="call">
+          recieve videosssssssssssss
+        </button> */}
         <button onClick={handleDisconnect} id="call">
           Disconnect video
         </button>
