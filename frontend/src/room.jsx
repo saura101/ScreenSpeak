@@ -2,6 +2,16 @@ import React, { useState } from "react";
 import { useSocket, useUser } from "./socket";
 import ReactPlayer from "react-player";
 import "./room.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faPhoneVolume,
+  faPhoneSlash,
+  faMicrophone,
+  faMicrophoneSlash,
+  faVideo,
+  faVideoSlash,
+} from "@fortawesome/free-solid-svg-icons";
+
 
 let peer = null;
 // let remoteVideo = document.getElementById("remoteVideo");
@@ -16,6 +26,18 @@ function Room(props) {
   const [remoteStream, setRemoteStream] = useState();
   const [remoteSocket, setRemoteSocket] = useState(null);
   const [remoteName, setRemoteName] = useState(null);
+  const [videoEnabled, setVideoEnabled] = useState(true);
+  const [audioEnabled, setAudioEnabled] = useState(true);
+
+  const toggleVideo = () => {
+    setVideoEnabled(!videoEnabled);
+    // Add code to enable/disable video as needed
+  };
+
+  const toggleAudio = () => {
+    setAudioEnabled(!audioEnabled);
+    // Add code to enable/disable audio as needed
+  };
 
   //creating Peer WebRTC connection
 
@@ -170,7 +192,7 @@ function Room(props) {
       tracks.forEach((track) => track.stop());
       setMyStream(null); // Clear the stream state
       console.log("Room Disconnected");
-      socket.emit("room-diconnect",{ room : props.roomID, email : User.email });
+      socket.emit("room-diconnect", { room: props.roomID, email: User.email });
       socket.disconnect();
     }
   }
@@ -178,14 +200,14 @@ function Room(props) {
   React.useEffect(() => {
     peerCheck();
 
-    if(myStream) {
+    if (myStream) {
       sendStream();
     }
     //cleanup
     return function () {
       peerCheck();
     };
-  }, [remoteSocket,myStream]);
+  }, [remoteSocket, myStream]);
 
   async function handleNegotiation() {
     const offer = await peer.createOffer();
@@ -231,13 +253,30 @@ function Room(props) {
       </div>
       <div>
         <button onClick={handleCall} id="call">
-          send video
+          <FontAwesomeIcon icon={faPhoneVolume} />
         </button>
         {/* <button onClick={handleSend} id="call">
           recieve videosssssssssssss
         </button> */}
+
+        <button onClick={toggleAudio} className="buttoncircle">
+          {audioEnabled ? (
+            <FontAwesomeIcon icon={faMicrophone} />
+          ) : (
+            <FontAwesomeIcon icon={faMicrophoneSlash} />
+          )}
+        </button>
+
+        <button onClick={toggleVideo} className="buttoncircle">
+          {videoEnabled ? (
+            <FontAwesomeIcon icon={faVideo} />
+          ) : (
+            <FontAwesomeIcon icon={faVideoSlash} />
+          )}
+        </button>
+
         <button onClick={handleDisconnect} id="call">
-          Disconnect video
+          <FontAwesomeIcon icon={faPhoneSlash} />
         </button>
       </div>
     </div>

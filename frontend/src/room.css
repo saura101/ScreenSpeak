@@ -1,5 +1,5 @@
 /* Room.css */
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
 
 .room {
   display: flex;
@@ -12,7 +12,7 @@
   padding-right: 20px;
 }
 
-span{
+span {
   font-size: 20px;
   font-weight: bold;
 }
@@ -60,13 +60,37 @@ button#send {
   background-color: #ffb700;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 50px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 30px;
   margin-left: 20px;
 }
 
 button#call:hover,
 button#send:hover {
   background-color: #a5d0ff;
+}
+
+.buttoncircle {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 20px;
+  margin-left: 20px;
+  border: none;
+  border-radius: 50px; /* Makes the buttoncircle round */
+  font-size: 30px;
+  cursor: pointer;
+  background-color: orange;
+  color: white;
+}
+
+
+/* Change button color to red on hover */
+.buttoncircle:hover {
+  background-color: #ff4d4d; /* Red color on hover */
+}
+
+/* Change button color to red when active (clicked) */
+.buttoncircle:active {
+  background-color: #ff4d4d; /* Red color when active (clicked) */
 }
