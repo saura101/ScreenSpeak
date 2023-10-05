@@ -98,7 +98,7 @@ io.on("connection", (socket) => {
         if(roomidToUserMapping.get(room) === 0)
             roomidToUserMapping.delete(room);
         emailToNameMapping.delete(email);
-        const soc = emailToSocketMapping(email);
+        const soc = emailToSocketMapping.get(email);
         emailToSocketMapping.delete(email);
         socketToEmailMapping.delete(soc);
     });
