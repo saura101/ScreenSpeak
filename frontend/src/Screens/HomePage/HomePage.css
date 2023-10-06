@@ -3,10 +3,10 @@
 
 .body {
   margin: 0px;
-  font-family: "Roboto Slab", serif;
-  
+  font-family: "Roboto Slab", serif !important;
 }
 .mainScreen {
+  font-family: "Roboto Slab", serif !important;
   display: flex;
   justify-content: space-around;
   background-image: url("https://cdn.pixabay.com/photo/2019/04/10/11/56/watercolor-4116932_1280.png");
@@ -18,8 +18,9 @@
   /* margin: 40px; */
   width: 60%;
   padding-right: 10%;
-  line-height: 1.7rem;
   float: left;
+  color: rgba(52, 52, 52, 0.808);
+  line-height: 1.7rem;
 }
 .rightSidee {
   width: 40%;
@@ -27,7 +28,7 @@
 }
 .Scrolltext {
   color: orange;
-  font-size:xx-large;
+  font-size: xx-large;
   font-weight: bolder;
   font-family: "Pixelify Sans", cursive;
 }
@@ -44,5 +45,6 @@
   .mainScreen {
     display: flex;
     flex-direction: column; /* Stack leftSidee above rightSidee */
+    height: 100%;
   }
 }
