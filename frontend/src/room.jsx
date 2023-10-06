@@ -11,13 +11,16 @@ import {
   faVideo,
   faVideoSlash,
 } from "@fortawesome/free-solid-svg-icons";
-
+import { useNavigate } from "react-router-dom";
 
 let peer = null;
 // let remoteVideo = document.getElementById("remoteVideo");
+
 function Room(props) {
   const { socket } = useSocket();
   const { User } = useUser();
+
+  const navigate = useNavigate();
 
   console.log(socket);
   console.log(socket.id);
@@ -25,17 +28,20 @@ function Room(props) {
   const [myStream, setMyStream] = useState(null);
   const [remoteStream, setRemoteStream] = useState();
   const [remoteSocket, setRemoteSocket] = useState(null);
+  const [remoteEmail,setRemoteEmail] = useState(null);
   const [remoteName, setRemoteName] = useState(null);
   const [videoEnabled, setVideoEnabled] = useState(true);
   const [audioEnabled, setAudioEnabled] = useState(true);
 
   const toggleVideo = () => {
     setVideoEnabled(!videoEnabled);
+    getUserMediaStream();
     // Add code to enable/disable video as needed
   };
 
   const toggleAudio = () => {
     setAudioEnabled(!audioEnabled);
+    getUserMediaStream();
     // Add code to enable/disable audio as needed
   };
 
@@ -73,6 +79,7 @@ function Room(props) {
     setRemoteSocket(id);
     //setRemoteEmail(emailID);
     setRemoteName(name);
+    setRemoteEmail(emailID);
     await makeCall(emailID);
   }
 
@@ -81,6 +88,7 @@ function Room(props) {
     setRemoteSocket(id);
     //setRemoteEmail(from);
     setRemoteName(myName);
+    setRemoteEmail(from);
     console.log(`incoming call from ${from}`, offer);
     await answerCall(offer, from);
   }
@@ -89,6 +97,8 @@ function Room(props) {
     await peer.setRemoteDescription(new RTCSessionDescription(answer));
     console.log("answwer Accepted");
     console.log("call got accepted", answer);
+    // let aud = new Audio("Call_Connected.mp3")
+    // aud.play();
   }
 
   async function handleAcceptedCall(data) {
@@ -100,8 +110,8 @@ function Room(props) {
     let stream = null;
     try {
       stream = await navigator.mediaDevices.getUserMedia({
-        audio: true,
-        video: true,
+        audio: audioEnabled,
+        video: videoEnabled,
       });
       setMyStream(stream);
     } catch (err) {
@@ -149,6 +159,23 @@ function Room(props) {
     socket.on("nego-needed", handleNegoIncoming);
     socket.on("nego-final", handleNegoFinal);
 
+
+    //window close
+    window.addEventListener('beforeunload', function (e) {
+      e.preventDefault();
+      e.returnValue = '';
+    });
+    window.addEventListener("unload", (event) => {
+      setMyStream(null); // Clear the stream state
+      setRemoteStream(null);
+      setRemoteName(null);
+      socket.emit("room-diconnect", { room: props.roomID, email: User.email });
+      socket.disconnect();
+      //peer.removeTrack();
+      peer.close();
+    });
+
+
     //cleanup
     return function () {
       socket.off("user-joined", handleNewUser);
@@ -166,20 +193,36 @@ function Room(props) {
     handleNegoFinal,
   ]);
 
-  async function peerCheck() {
-    if (!remoteSocket) {
-      document.getElementById("call").disabled = true;
-      console.log("hellomf");
-      //console.log("peer3",peer);
-    } else if (remoteSocket) {
-      document.getElementById("call").disabled = false;
-      console.log("hellodeer");
-      //console.log("peer4",peer);
-    }
-  }
-
   async function handleCall() {
+    // const state = peer.connectionState;
+    // console.log(state);
+    // if(state === "closed") {
+    //   await makeCall(remoteEmail);
+    //   console.log("reconnect");
+    // }
+    
     getUserMediaStream();
+    
+    peer.addEventListener("connectionstatechange", (event) => {
+      console.log("state change");
+      const state = peer.connectionState;
+      if(state=== "connected") {
+        let aud = new Audio("Call_Connected.mp3")
+        aud.play();
+      }
+      if(state === "closed"|| state === "disconnected") {
+        setMyStream(null); // Clear the stream state
+        setRemoteStream(null);
+        setRemoteName(null);
+        setRemoteSocket(null);
+        //peer.removeTrack();
+        peer.close();
+        console.log(peer);
+        peer = null;
+        let aud = new Audio("Hang_Up_Call.mp3");
+        aud.play();
+      }
+    });
     peer.addEventListener("negotiationneeded", handleNegotiation);
     //await sendStream();
     console.log("hello ji kaise ho saare");
@@ -191,13 +234,37 @@ function Room(props) {
       const tracks = myStream.getTracks();
       tracks.forEach((track) => track.stop());
       setMyStream(null); // Clear the stream state
+      setRemoteStream(null);
+      setRemoteName(null);
       console.log("Room Disconnected");
       socket.emit("room-diconnect", { room: props.roomID, email: User.email });
       socket.disconnect();
+      //peer.removeTrack();
+      peer.close();
+      peer = null;
+      navigate("/");
+      console.log("peer after disconnect",peer);
     }
   }
 
   React.useEffect(() => {
+
+    async function peerCheck() {
+      if (!remoteSocket) {
+        const btn = document.getElementById("call");
+        btn.disabled = true;
+        btn.classList.add("disabled");
+        console.log("hellomf");
+        //console.log("peer3",peer);
+      } else if (remoteSocket) {
+        const btn = document.getElementById("call");
+        btn.disabled = false;
+        btn.classList.remove("disabled");
+        console.log("hellodeer");
+        //console.log("peer4",peer);
+      }
+    }
+
     peerCheck();
 
     if (myStream) {
@@ -208,6 +275,10 @@ function Room(props) {
       peerCheck();
     };
   }, [remoteSocket, myStream]);
+
+  React.useEffect(() => {
+    console.log("unmounted");
+  },[])
 
   async function handleNegotiation() {
     const offer = await peer.createOffer();
