@@ -110,7 +110,7 @@ function JoinRoom() {
   //   return function () {
   //     socket.off("all-rooms", handleAllRooms);
   //   }
-  // }, [handleAllRooms]);
+  // },  [handleAllRooms]);
 
   return (
     <div className="join-room-container">
