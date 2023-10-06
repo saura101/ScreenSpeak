@@ -94,3 +94,7 @@ button#send:hover {
 .buttoncircle:active {
   background-color: #ff4d4d; /* Red color when active (clicked) */
 }
+.disabled{
+  opacity: 0.4;
+  background-color: #979797 !important;
+}

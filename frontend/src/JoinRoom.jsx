@@ -76,7 +76,7 @@ function JoinRoom() {
   console.log(socket);
 
   //room info
-  const [roomData, setRoomData] = useState([]);//use state
+  const [roomData, setRoomData] = useState(null);//use state
   const [err,setErr] = useState(null);
   //const roomData = [];
 
@@ -86,14 +86,14 @@ function JoinRoom() {
   }
 
   React.useEffect(() => {
-    if (roomData.length === 0) {
+    if (!roomData) {
       socket.emit("get-rooms");
     }
     async function handleAllRooms(data) {
       const { rooms } = data;
       console.log("imcoming array", rooms);
       console.log("all-rooms triggered");
-      setRoomData((prevRoomData) => [...prevRoomData, ...rooms]);
+      setRoomData((prevRoomData) => [...rooms]);
       console.log("roomdata", roomData);
     }
     socket.on("all-rooms", handleAllRooms);
@@ -117,7 +117,7 @@ function JoinRoom() {
       <h1 className="JoinRoomHeading">Join a Room</h1>
       <h2>{err}</h2>
       <div className="card-container">
-        {roomData.map((room, index) => (
+        {roomData && roomData.map((room, index) => (
           <Card key={index} roomName={room} />
         ))}
       </div>

@@ -93,6 +93,7 @@ io.on("connection", (socket) => {
     });
 
     socket.on("room-diconnect",(data)=> {
+        console.log("socket disconnected",socket.id);
         const { room ,email } = data;
         roomidToUserMapping.set(room,roomidToUserMapping.get(room)-1);
         if(roomidToUserMapping.get(room) === 0)
