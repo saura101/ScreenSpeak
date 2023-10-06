@@ -1,4 +1,4 @@
-body{
+body {
   margin: 0;
 }
 
@@ -11,7 +11,7 @@ body{
   background-size: cover;
   height: 100vh;
 }
-.JoinRoomHeading{
+.JoinRoomHeading {
   background-color: #ff7700;
   color: white;
   padding-left: 20px;
@@ -19,20 +19,7 @@ body{
   border-radius: 20px;
 }
 
-.card-container {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-}
 
-.room_card {
-  width: 300px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
-  background-color: antiquewhite;
-}
 
 .room_card-image {
   height: 200px;
@@ -62,3 +49,39 @@ h2 {
 .joinRoomButton:hover {
   background-color: #87add7;
 }
+.room_card {
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  background-color: antiquewhite;
+}
+/* Float four columns side by side */
+.card-container {
+  padding: 0 10px;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  gap: 20px;
+  width: 90%;
+  flex-wrap: wrap;
+}
+
+
+/* Responsive columns - one column layout (vertical) on small screens */
+@media screen and (max-width: 600px) {
+  .card-container {
+    width: 100%;
+    margin: 20px;
+    display: block;
+    margin-bottom: 20px;
+  }
+  .room_card{
+    margin: 20px;
+  }
+  .join-room-container{
+    height: 100%;
+  }
+}
+

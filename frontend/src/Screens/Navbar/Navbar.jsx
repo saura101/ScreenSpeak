@@ -209,9 +209,9 @@ function Navbar() {
         </span>
       </div>
       <div className="right-content">
-        <a className="item" onClick={join_call}>
+        <div className="item" onClick={join_call}>
           Join a call
-        </a>
+        </div>
         <div className="item" onClick={host_call}>
           Host a call
         </div>

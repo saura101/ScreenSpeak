@@ -24,14 +24,17 @@
 
 /* Style individual items and button */
 .item {
-  margin-right: 20px;
+  margin: 10px;
   font-weight: bold;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .button {
   background-color: #ff6600;
-  color: rgb(0, 0, 0);
+  color: rgba(54, 54, 54, 0.696);
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
@@ -44,4 +47,7 @@
 .item:hover,
 .button:hover {
     color: #ffffff;
+}
+.title{
+  font-size: 2rem;
 }

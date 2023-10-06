@@ -28,7 +28,7 @@ const HomePage = () => {
         <h4>
           Unlock the power of face-to-face connections, no matter the distance.
           Our video calls bridge gaps and build bonds, connecting you with loved
-          ones, colleagues, and friends as if youre right there beside them. Say
+          ones, colleagues, and friends as if you're right there beside them. Say
           hello to a world where miles fade into pixels, and conversations
           become moments to treasure.
         </h4>

@@ -294,7 +294,7 @@ function Room(props) {
         {myStream && (
           <div
             className="outgoing-video vid"
-            style={{ width: "80%", height: "80%", margin: "10px" }}
+            style={{  margin: "10px" }}
           >
             <ReactPlayer
               url={myStream}
@@ -309,7 +309,7 @@ function Room(props) {
         {remoteStream && (
           <div
             className="incoming-video vid"
-            style={{ width: "80%", height: "80%", margin: "10px" }}
+            style={{  margin: "10px" }}
           >
             <ReactPlayer
               url={remoteStream}
@@ -318,6 +318,7 @@ function Room(props) {
               playing
             />
             <span className="user-name">{remoteName}</span>
+            
           </div>
         )}
         {/* <video id="remoteVideo" autoPlay></video> */}
