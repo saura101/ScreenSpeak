@@ -59,15 +59,6 @@ h4 {
   .room{
     height: 100%;
   }
-  /* .outgoing-video {
-    float: right;
-    padding-left: 10px;
-    z-index: 100;
-    height: 50px;
-    width: 50px;
-  } */
-  .incoming-video {
-  }
   button{
     font-size: 15px;
   }
@@ -81,18 +72,13 @@ button#call,
 button#send {
   margin: 20px;
   padding: 10px 20px;
-  background-color: #ffb700;
   color: white;
+  background-color: orange;
   border: none;
   border-radius: 50px;
   cursor: pointer;
   font-size: 30px;
   margin-left: 20px;
-}
-
-button#call:hover,
-button#send:hover {
-  background-color: #a5d0ff;
 }
 
 .buttoncircle {
@@ -108,16 +94,19 @@ button#send:hover {
   color: white;
 }
 
-/* Change button color to red on hover */
-.buttoncircle:hover {
-  background-color: #ff4d4d; /* Red color on hover */
-}
-
-/* Change button color to red when active (clicked) */
-.buttoncircle:active {
-  background-color: #ff4d4d; /* Red color when active (clicked) */
-}
 .disabled {
   opacity: 0.4;
   background-color: #979797 !important;
+}
+.disconnectButton{
+   display: inline-block;
+  padding: 10px 20px;
+  margin: 20px;
+  margin-left: 20px;
+  border: none;
+  border-radius: 50px; /* Makes the buttoncircle round */
+  font-size: 30px;
+  cursor: pointer;
+  color: white;
+  background-color: red !important;
 }
