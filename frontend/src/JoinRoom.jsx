@@ -82,6 +82,7 @@ function JoinRoom() {
 
   function handleRoomFull() {
     console.log("room full!");
+    setErr("");
     setErr("ROOM FULL!");
   }
 
@@ -115,7 +116,7 @@ function JoinRoom() {
   return (
     <div className="join-room-container">
       <h1 className="JoinRoomHeading">Join a Room</h1>
-      <h2>{err}</h2>
+      <h2 className="err">{err}</h2>
       <div className="card-container">
         {roomData &&
           roomData.map((room, index) => <Card key={index} roomName={room} />)}
