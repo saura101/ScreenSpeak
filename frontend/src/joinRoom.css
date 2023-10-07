@@ -86,3 +86,11 @@ h2 {
   }
 }
 
+.err {
+  color: rgb(255, 36, 36);
+  background-color: rgb(255, 205, 205);
+  padding: 0.5% 3%;
+  margin: 4%;
+  border-radius: 10px;
+  margin-top: 1%;
+}
