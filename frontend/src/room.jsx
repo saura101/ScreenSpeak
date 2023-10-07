@@ -33,24 +33,37 @@ function Room(props) {
   const [videoEnabled, setVideoEnabled] = useState(true);
   const [audioEnabled, setAudioEnabled] = useState(true);
 
+
+  async function handleTrack(event) {
+    const streams = event.streams;
+    console.log("recieved", streams[0]);
+    setRemoteStream(streams[0]);
+    console.log("remote", remoteStream);
+  }
+
   const toggleVideo = async() => {
     setVideoEnabled(!videoEnabled);
-    const stream = await navigator.mediaDevices.getUserMedia({
-      audio: audioEnabled,
-      video: videoEnabled,
-    });
-    setMyStream(stream);
+    const videoTrack = myStream.getTracks().find(track => track.kind === "video");
+    if(videoTrack.enabled) {
+      videoTrack.enabled = false;
+    } else {
+      videoTrack.enabled = true;
+    }
     // handleCall();
     // Add code to enable/disable video as needed
   };
 
   const toggleAudio = async() => {
-    setAudioEnabled(!audioEnabled);
-    const stream = await navigator.mediaDevices.getUserMedia({
-      audio: audioEnabled,
-      video: videoEnabled,
+    setAudioEnabled((prev)=> {
+      return !prev;
     });
-    setMyStream(stream);
+    //console.log(audioEnabled);
+    const audioTrack = myStream.getTracks().find(track => track.kind === "audio");
+    if(audioTrack.enabled) {
+      audioTrack.enabled = false;
+    } else {
+      audioTrack.enabled = true;
+    }
     // handleCall();
     // Add code to enable/disable audio as needed
   };
@@ -140,13 +153,6 @@ function Room(props) {
     // peer.addEventListener("negotiationneeded", handleNegotiation);
     // await sendStream();
     //peer.addEventListener("track", handleTrack);
-  }
-
-  async function handleTrack(event) {
-    const streams = event.streams;
-    console.log("recieved", streams[0]);
-    setRemoteStream(streams[0]);
-    console.log("remote", remoteStream);
   }
 
   async function handleNegoIncoming(data) {
