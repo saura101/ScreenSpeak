@@ -35,7 +35,7 @@ function Card(props) {
   }
 
   function getBgImage() {
-    let n = 1 + Math.floor(Math.random() * 6);
+    let n = 1 + Math.floor(Math.random() * 15);
     return "url('bg" + n + ".jpg')";
   }
 
