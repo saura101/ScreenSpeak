@@ -28,11 +28,10 @@ function Room(props) {
   const [myStream, setMyStream] = useState(null);
   const [remoteStream, setRemoteStream] = useState();
   const [remoteSocket, setRemoteSocket] = useState(null);
-  const [remoteEmail,setRemoteEmail] = useState(null);
+  const [remoteEmail, setRemoteEmail] = useState(null);
   const [remoteName, setRemoteName] = useState(null);
   const [videoEnabled, setVideoEnabled] = useState(true);
   const [audioEnabled, setAudioEnabled] = useState(true);
-
 
   async function handleTrack(event) {
     const streams = event.streams;
@@ -41,10 +40,12 @@ function Room(props) {
     console.log("remote", remoteStream);
   }
 
-  const toggleVideo = async() => {
+  const toggleVideo = async () => {
     setVideoEnabled(!videoEnabled);
-    const videoTrack = myStream.getTracks().find(track => track.kind === "video");
-    if(videoTrack.enabled) {
+    const videoTrack = myStream
+      .getTracks()
+      .find((track) => track.kind === "video");
+    if (videoTrack.enabled) {
       videoTrack.enabled = false;
     } else {
       videoTrack.enabled = true;
@@ -53,13 +54,15 @@ function Room(props) {
     // Add code to enable/disable video as needed
   };
 
-  const toggleAudio = async() => {
-    setAudioEnabled((prev)=> {
+  const toggleAudio = async () => {
+    setAudioEnabled((prev) => {
       return !prev;
     });
     //console.log(audioEnabled);
-    const audioTrack = myStream.getTracks().find(track => track.kind === "audio");
-    if(audioTrack.enabled) {
+    const audioTrack = myStream
+      .getTracks()
+      .find((track) => track.kind === "audio");
+    if (audioTrack.enabled) {
       audioTrack.enabled = false;
     } else {
       audioTrack.enabled = true;
@@ -73,7 +76,11 @@ function Room(props) {
   const config = {
     iceServers: [
       {
-        urls: ["stun:stun.l.google.com:19302", "stun:stun2.l.google.com:19302","stun:stun.ekiga.net"],
+        urls: [
+          "stun:stun.l.google.com:19302",
+          "stun:stun2.l.google.com:19302",
+          "stun:stun.ekiga.net",
+        ],
       },
     ],
   };
@@ -175,11 +182,10 @@ function Room(props) {
     socket.on("nego-needed", handleNegoIncoming);
     socket.on("nego-final", handleNegoFinal);
 
-
     //window close
-    window.addEventListener('beforeunload', function (e) {
+    window.addEventListener("beforeunload", function (e) {
       e.preventDefault();
-      e.returnValue = '';
+      e.returnValue = "";
     });
     window.addEventListener("unload", (event) => {
       setMyStream(null); // Clear the stream state
@@ -190,7 +196,6 @@ function Room(props) {
       //peer.removeTrack();
       peer.close();
     });
-
 
     //cleanup
     return function () {
@@ -216,20 +221,20 @@ function Room(props) {
     //   await makeCall(remoteEmail);
     //   console.log("reconnect");
     // }
-    
+
     getUserMediaStream();
-    
+
     peer.addEventListener("connectionstatechange", (event) => {
       console.log("state change");
       const state = peer.connectionState;
-      if(state === "connected") {
-        let aud = new Audio("Call_Connected.mp3")
+      if (state === "connected") {
+        let aud = new Audio("Call_Connected.mp3");
         aud.play();
         const btn = document.getElementById("call");
         btn.disabled = true;
         btn.classList.add("disabled");
       }
-      if(state === "closed"|| state === "disconnected") {
+      if (state === "closed" || state === "disconnected") {
         setMyStream(null); // Clear the stream state
         setRemoteStream(null);
         setRemoteName(null);
@@ -262,12 +267,11 @@ function Room(props) {
       peer.close();
       peer = null;
       navigate("/");
-      console.log("peer after disconnect",peer);
+      console.log("peer after disconnect", peer);
     }
   }
 
   React.useEffect(() => {
-
     async function peerCheck() {
       if (!remoteSocket) {
         const btn = document.getElementById("call");
@@ -298,7 +302,7 @@ function Room(props) {
 
   React.useEffect(() => {
     console.log("unmounted");
-  },[])
+  }, []);
 
   async function handleNegotiation() {
     const offer = await peer.createOffer();
@@ -312,10 +316,7 @@ function Room(props) {
       <span>{remoteSocket ? "connected" : "no one in room"}</span>
       <div className="video-call-container" style={{ position: "relative" }}>
         {myStream && (
-          <div
-            className="outgoing-video vid"
-            style={{  margin: "10px" }}
-          >
+          <div className="outgoing-video vid" style={{ margin: "10px" }}>
             <ReactPlayer
               url={myStream}
               width="100%"
@@ -327,10 +328,7 @@ function Room(props) {
           </div>
         )}
         {remoteStream && (
-          <div
-            className="incoming-video vid"
-            style={{  margin: "10px" }}
-          >
+          <div className="incoming-video vid" style={{ margin: "10px" }}>
             <ReactPlayer
               url={remoteStream}
               width="100%"
@@ -338,7 +336,6 @@ function Room(props) {
               playing
             />
             <span className="user-name">{remoteName}</span>
-            
           </div>
         )}
         {/* <video id="remoteVideo" autoPlay></video> */}
@@ -355,7 +352,10 @@ function Room(props) {
           {audioEnabled ? (
             <FontAwesomeIcon icon={faMicrophone} />
           ) : (
-            <FontAwesomeIcon icon={faMicrophoneSlash} />
+            <FontAwesomeIcon
+              icon={faMicrophoneSlash}
+              style={{ color: "black", opacity: 0.2 }}
+            />
           )}
         </button>
 
@@ -363,11 +363,14 @@ function Room(props) {
           {videoEnabled ? (
             <FontAwesomeIcon icon={faVideo} />
           ) : (
-            <FontAwesomeIcon icon={faVideoSlash} />
+            <FontAwesomeIcon
+              icon={faVideoSlash}
+              style={{ color: "black", opacity: 0.2 }}
+            />
           )}
         </button>
 
-        <button onClick={handleDisconnect} id="call">
+        <button onClick={handleDisconnect} className="disconnectButton">
           <FontAwesomeIcon icon={faPhoneSlash} />
         </button>
       </div>
