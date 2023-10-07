@@ -209,6 +209,9 @@ function Room(props) {
       if(state=== "connected") {
         let aud = new Audio("Call_Connected.mp3")
         aud.play();
+        const btn = document.getElementById("call");
+        btn.disabled = true;
+        btn.classList.add("disabled");
       }
       if(state === "closed"|| state === "disconnected") {
         setMyStream(null); // Clear the stream state
