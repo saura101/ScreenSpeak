@@ -33,15 +33,25 @@ function Room(props) {
   const [videoEnabled, setVideoEnabled] = useState(true);
   const [audioEnabled, setAudioEnabled] = useState(true);
 
-  const toggleVideo = () => {
+  const toggleVideo = async() => {
     setVideoEnabled(!videoEnabled);
-    getUserMediaStream();
+    const stream = await navigator.mediaDevices.getUserMedia({
+      audio: audioEnabled,
+      video: videoEnabled,
+    });
+    setMyStream(stream);
+    // handleCall();
     // Add code to enable/disable video as needed
   };
 
-  const toggleAudio = () => {
+  const toggleAudio = async() => {
     setAudioEnabled(!audioEnabled);
-    getUserMediaStream();
+    const stream = await navigator.mediaDevices.getUserMedia({
+      audio: audioEnabled,
+      video: videoEnabled,
+    });
+    setMyStream(stream);
+    // handleCall();
     // Add code to enable/disable audio as needed
   };
 
@@ -50,7 +60,7 @@ function Room(props) {
   const config = {
     iceServers: [
       {
-        urls: ["stun:stun.l.google.com:19302", "stun:stun2.l.google.com:19302"],
+        urls: ["stun:stun.l.google.com:19302", "stun:stun2.l.google.com:19302","stun:stun.ekiga.net"],
       },
     ],
   };
@@ -206,7 +216,7 @@ function Room(props) {
     peer.addEventListener("connectionstatechange", (event) => {
       console.log("state change");
       const state = peer.connectionState;
-      if(state=== "connected") {
+      if(state === "connected") {
         let aud = new Audio("Call_Connected.mp3")
         aud.play();
         const btn = document.getElementById("call");
@@ -271,6 +281,7 @@ function Room(props) {
     peerCheck();
 
     if (myStream) {
+      console.log("stream changed");
       sendStream();
     }
     //cleanup

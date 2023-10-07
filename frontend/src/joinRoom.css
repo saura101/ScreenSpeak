@@ -7,9 +7,10 @@ body {
   flex-direction: column;
   align-items: center;
   background-image: url("/background-3616101_1280.jpg");
-  background-repeat: no-repeat;
+  background-repeat: repeat;
   background-size: cover;
-  height: 100vh;
+  min-height: 100vh;
+  padding-bottom: 3%;
 }
 .JoinRoomHeading {
   background-color: #ff7700;
