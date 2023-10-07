@@ -35,8 +35,8 @@ function Card(props) {
   }
 
   function getBgImage() {
-    let n = 1+ Math.floor(Math.random()*6);
-    return "url('bg"+n+".jpg')";
+    let n = 1 + Math.floor(Math.random() * 6);
+    return "url('bg" + n + ".jpg')";
   }
 
   React.useEffect(() => {
@@ -52,8 +52,8 @@ function Card(props) {
     <div className="room_card">
       <div
         className="room_card-image"
-        style={{ 
-          backgroundImage : getBgImage()
+        style={{
+          backgroundImage: getBgImage(),
         }}
       ></div>
       <div className="card-info">
@@ -76,8 +76,8 @@ function JoinRoom() {
   console.log(socket);
 
   //room info
-  const [roomData, setRoomData] = useState(null);//use state
-  const [err,setErr] = useState(null);
+  const [roomData, setRoomData] = useState(null); //use state
+  const [err, setErr] = useState(null);
   //const roomData = [];
 
   function handleRoomFull() {
@@ -97,10 +97,10 @@ function JoinRoom() {
       console.log("roomdata", roomData);
     }
     socket.on("all-rooms", handleAllRooms);
-    socket.on("room-full",handleRoomFull);
+    socket.on("room-full", handleRoomFull);
     return function () {
       socket.off("all-rooms", handleAllRooms);
-      socket.off("room-full",handleRoomFull);
+      socket.off("room-full", handleRoomFull);
     };
   }, [socket, roomData]);
 
@@ -117,9 +117,8 @@ function JoinRoom() {
       <h1 className="JoinRoomHeading">Join a Room</h1>
       <h2>{err}</h2>
       <div className="card-container">
-        {roomData && roomData.map((room, index) => (
-          <Card key={index} roomName={room} />
-        ))}
+        {roomData &&
+          roomData.map((room, index) => <Card key={index} roomName={room} />)}
       </div>
     </div>
   );
