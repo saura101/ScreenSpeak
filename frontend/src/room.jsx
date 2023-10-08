@@ -33,6 +33,7 @@ function Room(props) {
   const [videoEnabled, setVideoEnabled] = useState(true);
   const [audioEnabled, setAudioEnabled] = useState(true);
 
+
   async function handleTrack(event) {
     const streams = event.streams;
     console.log("recieved", streams[0]);
@@ -221,6 +222,29 @@ function Room(props) {
     //   await makeCall(remoteEmail);
     //   console.log("reconnect");
     // }
+    const dataChannel = peer.createDataChannel("myChat", dataChannelOptions);
+    peer.addEventListener('datachannel', event => {
+      const dataChannel = event.channel;
+    });
+
+  //open datachannel event
+  dataChannel.addEventListener('open', event => {
+    messageBox.disabled = false;
+    //messageBox.focus();
+  });
+
+  //datachannel send message
+  const sendButton = document.querySelector('#sendButton');
+  sendButton.addEventListener('click', event => {
+    const message = "hello dude";
+    dataChannel.send(message);
+  })
+
+  // Append new messages to the box of incoming messages
+  dataChannel.addEventListener('message', event => {
+  const message = event.data;
+  incomingMessages.textContent += message + '\n';
+  });
 
     getUserMediaStream();
 
@@ -301,7 +325,18 @@ function Room(props) {
   }, [remoteSocket, myStream]);
 
   React.useEffect(() => {
-    console.log("unmounted");
+    
+    return function() {
+      console.log("unounted");
+      setMyStream(null); // Clear the stream state
+      setRemoteStream(null);
+      setRemoteName(null);
+      socket.emit("room-diconnect", { room: props.roomID, email: User.email });
+      socket.disconnect();
+      //peer.removeTrack();
+      //peer.close();
+    }
+
   }, []);
 
   async function handleNegotiation() {
