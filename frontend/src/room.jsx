@@ -10,6 +10,8 @@ import {
   faMicrophoneSlash,
   faVideo,
   faVideoSlash,
+  faComment,
+  faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 
@@ -32,6 +34,8 @@ function Room(props) {
   const [remoteName, setRemoteName] = useState(null);
   const [videoEnabled, setVideoEnabled] = useState(true);
   const [audioEnabled, setAudioEnabled] = useState(true);
+  const [message, setMessage] = useState(["kyun", "nahi"]);
+  const [sentMsg, setSentMsg] = useState("");
 
 
   async function handleTrack(event) {
@@ -256,7 +260,6 @@ function Room(props) {
         aud.play();
         const btn = document.getElementById("call");
         btn.disabled = true;
-        btn.classList.add("disabled");
       }
       if (state === "closed" || state === "disconnected") {
         setMyStream(null); // Clear the stream state
@@ -308,7 +311,20 @@ function Room(props) {
         btn.disabled = false;
         btn.classList.remove("disabled");
         console.log("hellodeer");
+
         //console.log("peer4",peer);
+        //this is for Data Channel
+        const chatBtn = document.getElementById("openButton");
+        chatBtn.disabled = false;
+        chatBtn.classList.remove("disabled");
+        chatBtn.addEventListener("click", () => {
+          // Toggle the compartment open/close by changing the right property
+          if (compartment.style.right === "0px") {
+            compartment.style.right = "-350px"; // Close the compartment
+          } else {
+            compartment.style.right = "0px"; // Open the compartment
+          }
+        });
       }
     }
 
@@ -344,7 +360,11 @@ function Room(props) {
     peer.setLocalDescription(new RTCSessionDescription(offer));
     socket.emit("nego-needed", { offer, to: remoteSocket });
   }
-
+  function displayMsg() {
+    setMessage([...message, sentMsg]);
+    console.log(message);
+    setSentMsg("");
+  }
   return (
     <div className="room">
       <span>Room: {props.roomID}</span>
@@ -408,6 +428,33 @@ function Room(props) {
         <button onClick={handleDisconnect} className="disconnectButton">
           <FontAwesomeIcon icon={faPhoneSlash} />
         </button>
+        <button className="chatButton disabled" id="openButton" disabled>
+          <FontAwesomeIcon icon={faComment} />
+        </button>
+        <div id="compartment" class="compartment">
+          <div className="chat-container">
+            <div className="chat-messages" id="chatMessages">
+              <p>Your Conversation</p>
+              {message.map((msg) => (
+                <p>{msg}</p>
+              ))}
+            </div>
+            <div className="chat-input">
+              <input
+                type="text"
+                id="messageInput"
+                placeholder="Type a message..."
+                value={sentMsg}
+                onChange={(e) => {
+                  setSentMsg(e.target.value);
+                }}
+              />
+              <button id="sendButton" onClick={displayMsg}>
+                <FontAwesomeIcon icon={faPaperPlane} />
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

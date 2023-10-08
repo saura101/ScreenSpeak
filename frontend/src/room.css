@@ -56,10 +56,10 @@ h4 {
   .video-call-container {
     flex-direction: column;
   }
-  .room{
+  .room {
     height: 100%;
   }
-  button{
+  button {
     font-size: 15px;
   }
 }
@@ -98,8 +98,8 @@ button#send {
   opacity: 0.4;
   background-color: #979797 !important;
 }
-.disconnectButton{
-   display: inline-block;
+.disconnectButton {
+  display: inline-block;
   padding: 10px 20px;
   margin: 20px;
   margin-left: 20px;
@@ -109,4 +109,74 @@ button#send {
   cursor: pointer;
   color: white;
   background-color: red !important;
+}
+.chatButton {
+  padding: 10px 20px;
+  margin: 20px;
+  margin-left: 20px;
+  border: none;
+  border-radius: 50px; /* Makes the buttoncircle round */
+  font-size: 30px;
+  cursor: pointer;
+  background-color: orange;
+  color: white;
+}
+/* Style for the compartment */
+.compartment {
+  position: fixed;
+  top: 20px;
+  border-radius: 20px;
+  margin-right: 20px;
+  right: -300px; /* Initially hidden on the right side */
+  width: 300px;
+  height: 80%;
+  background-color: white;
+  transition: right 0.3s ease-in-out; /* Smooth transition when opening/closing */
+  z-index: 1;
+  overflow-y: auto; /* Enable scrolling if content overflows */
+  box-shadow: -5px 5px 5px rgba(0, 0, 0, 0.2); /* Add a shadow on the left side */
+}
+
+/* Style for the chat container */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: rgb(223, 176, 248);
+}
+
+/* Style for the chat messages */
+.chat-messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+/* Style for the chat input field and send button */
+.chat-input {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #fff;
+  box-shadow: 1px -1px 1px rgba(0, 0, 0, 0.2);
+}
+
+#messageInput {
+  flex: 1;
+  padding: 10px;
+  font-size: 15px;
+  border: 0.5px solid #ccc;
+  border-radius: 10px;
+}
+
+#sendButton {
+  margin-left: 10px;
+  background-color: orange;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 10px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
 }
