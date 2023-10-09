@@ -158,6 +158,7 @@ function Navbar() {
       navigate("/joinRoom");
     } else {
       console.log("no user");
+      navigate("/login");
     } 
   }
 
@@ -175,6 +176,7 @@ function Navbar() {
       console.log(socket);
     } else {
       console.log("no user");
+      navigate("/login");
     }
   }
 

@@ -180,3 +180,14 @@ button#send {
   font-size: 15px;
   font-weight: bold;
 }
+.self {
+  background-color: #e8c5ff;
+  padding: 2% 5%;
+  /* width: fit-content; */
+}
+.remote {
+  background-color: #c061ffdd;
+  text-align: right;
+  padding: 2% 5%;
+  /* width: fit-content; */
+}

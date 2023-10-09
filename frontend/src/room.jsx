@@ -16,6 +16,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 let peer = null;
+let channel = null;
 // let remoteVideo = document.getElementById("remoteVideo");
 
 function Room(props) {
@@ -34,7 +35,7 @@ function Room(props) {
   const [remoteName, setRemoteName] = useState(null);
   const [videoEnabled, setVideoEnabled] = useState(true);
   const [audioEnabled, setAudioEnabled] = useState(true);
-  const [message, setMessage] = useState(["kyun", "nahi"]);
+  const [message, setMessage] = useState([{ name : "self", msg : "begining" }]);
   const [sentMsg, setSentMsg] = useState("");
 
   async function handleTrack(event) {
@@ -99,6 +100,23 @@ function Room(props) {
 
   async function answerCall(offer, from) {
     peer = new RTCPeerConnection(config);
+
+    //datachannel
+    //peer.addEventListener("negotiationneeded", handleNegotiation);
+    // channel = peer.createDataChannel("chat", {
+    //   negotiated: true,
+    //   id: 0,
+    // });
+    // console.log("ready", channel.readyState);
+    // channel.onopen = (event) => {
+    //   channel.send("Hi from user2!");
+    //   console.log("channel open");
+    // };
+    // channel.onmessage = (event) => {
+    //   console.log(event.data);
+    //   setMessage([...message, event.data]);
+    // };
+
     peer.addEventListener("track", handleTrack);
     await peer.setRemoteDescription(new RTCSessionDescription(offer));
     console.log("offer accepted");
@@ -131,8 +149,6 @@ function Room(props) {
     await peer.setRemoteDescription(new RTCSessionDescription(answer));
     console.log("answwer Accepted");
     console.log("call got accepted", answer);
-    // let aud = new Audio("Call_Connected.mp3")
-    // aud.play();
   }
 
   async function handleAcceptedCall(data) {
@@ -160,11 +176,11 @@ function Room(props) {
     });
   }
 
-  async function handleSend() {
-    // peer.addEventListener("negotiationneeded", handleNegotiation);
-    // await sendStream();
-    //peer.addEventListener("track", handleTrack);
-  }
+  // async function handleSend() {
+  //   // peer.addEventListener("negotiationneeded", handleNegotiation);
+  //   // await sendStream();
+  //   //peer.addEventListener("track", handleTrack);
+  // }
 
   async function handleNegoIncoming(data) {
     const { from, offer } = data;
@@ -236,6 +252,41 @@ function Room(props) {
         aud.play();
         const btn = document.getElementById("call");
         btn.disabled = true;
+
+        //this is for Data Channel
+        const chatBtn = document.getElementById("openButton");
+        chatBtn.disabled = false;
+        chatBtn.classList.remove("disabled");
+        chatBtn.addEventListener("click", () => {
+          console.log("channel", channel);
+          if (channel === null) {
+            //datachannel
+            //peer.addEventListener("negotiationneeded", handleNegotiation);
+            channel = peer.createDataChannel("chat", {
+              negotiated: true,
+              id: 0,
+            });
+            console.log("ready", channel.readyState);
+            channel.onopen = (event) => {
+              //channel.send("Hi from user1!");
+              console.log("channel open");
+              console.log("ready", channel.readyState);
+            };
+            channel.onmessage = (event) => {
+              console.log(event.data);
+              setMessage((prevval) => {
+                return [...prevval, { name : "remote", msg : event.data}];
+              });
+            };
+          }
+
+          // Toggle the compartment open/close by changing the right property
+          if (compartment.style.right === "0px") {
+            compartment.style.right = "-350px"; // Close the compartment
+          } else {
+            compartment.style.right = "0px"; // Open the compartment
+          }
+        });
       }
       if (state === "closed" || state === "disconnected") {
         setMyStream(null); // Clear the stream state
@@ -250,6 +301,7 @@ function Room(props) {
         aud.play();
       }
     });
+
     peer.addEventListener("negotiationneeded", handleNegotiation);
     //await sendStream();
     console.log("hello ji kaise ho saare");
@@ -287,20 +339,6 @@ function Room(props) {
         btn.disabled = false;
         btn.classList.remove("disabled");
         console.log("hellodeer");
-
-        //console.log("peer4",peer);
-        //this is for Data Channel
-        const chatBtn = document.getElementById("openButton");
-        chatBtn.disabled = false;
-        chatBtn.classList.remove("disabled");
-        chatBtn.addEventListener("click", () => {
-          // Toggle the compartment open/close by changing the right property
-          if (compartment.style.right === "0px") {
-            compartment.style.right = "-350px"; // Close the compartment
-          } else {
-            compartment.style.right = "0px"; // Open the compartment
-          }
-        });
       }
     }
 
@@ -317,7 +355,16 @@ function Room(props) {
   }, [remoteSocket, myStream]);
 
   React.useEffect(() => {
-    console.log("unmounted");
+    return function () {
+      console.log("unounted");
+      setMyStream(null); // Clear the stream state
+      setRemoteStream(null);
+      setRemoteName(null);
+      socket.emit("room-diconnect", { room: props.roomID, email: User.email });
+      socket.disconnect();
+      //peer.removeTrack();
+      //peer.close();
+    };
   }, []);
 
   async function handleNegotiation() {
@@ -326,8 +373,11 @@ function Room(props) {
     socket.emit("nego-needed", { offer, to: remoteSocket });
   }
   function displayMsg() {
-    setMessage([...message, sentMsg]);
+    setMessage((prevval) => {
+      return [...prevval, { name : "self", msg : sentMsg}];
+    });
     console.log(message);
+    channel.send(sentMsg);
     setSentMsg("");
   }
   return (
@@ -396,12 +446,12 @@ function Room(props) {
         <button className="chatButton disabled" id="openButton" disabled>
           <FontAwesomeIcon icon={faComment} />
         </button>
-        <div id="compartment" class="compartment">
+        <div id="compartment" className="compartment">
           <div className="chat-container">
             <div className="chat-messages" id="chatMessages">
               <p>Your Conversation</p>
-              {message.map((msg) => (
-                <p>{msg}</p>
+              {message.map((msg, index) => (
+                <p key={index} className={msg.name}>{msg.msg}</p>
               ))}
             </div>
             <div className="chat-input">
@@ -414,7 +464,12 @@ function Room(props) {
                   setSentMsg(e.target.value);
                 }}
               />
-              <button id="sendButton" onClick={displayMsg}>
+              <button
+                id="sendButton"
+                onClick={() => {
+                  displayMsg();
+                }}
+              >
                 <FontAwesomeIcon icon={faPaperPlane} />
               </button>
             </div>
