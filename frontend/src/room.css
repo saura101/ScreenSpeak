@@ -150,6 +150,8 @@ button#send {
   flex: 1;
   padding: 10px;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Style for the chat input field and send button */
@@ -183,11 +185,78 @@ button#send {
 .self {
   background-color: #e8c5ff;
   padding: 2% 5%;
-  /* width: fit-content; */
+  border-radius: 10px;
+  width: fit-content;
+  
+  box-shadow:2px 2px #631e92dd;
 }
 .remote {
   background-color: #c061ffdd;
   text-align: right;
   padding: 2% 5%;
-  /* width: fit-content; */
+  border-radius: 10px;
+  align-self: flex-end;
+  width: fit-content;
+  box-shadow:2px 2px #520089dd;
+}
+.chutchat{
+  padding-top: 10px;
+  text-align: center;text-shadow: 3px 3px 0 var(#520089dd), 6px 6px 0 #e8c5ff,
+    9px 9px #e54, 12px 12px 0 #000000;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 0;
+  color: var(--color-primary);
+  animation: shadows 1.2s ease-in infinite;
+  letter-spacing: 0.2rem;
+}
+
+@keyframes shadows {
+  
+  10% {
+    transform: translate(-2px, -2px);
+    text-shadow: 3px 3px 0 var();
+  }
+  20% {
+    transform: translate(-4px, -4px);
+    text-shadow: 3px 3px 0 var(),
+      6px 6px 0 #e8c5ff;
+  }
+  30% {
+    transform: translate(-6px, -6px);
+    text-shadow: 3px 3px 0 var(),
+      6px 6px 0 #e8c5ff, 9px 9px #e54;
+  }
+  40% {
+    transform: translate(-8px, -9px);
+    text-shadow: 3px 3px 0 var(),
+      6px 6px 0 #e8c5ff, 9px 9px #e54,
+      12px 12px 0 #000000;
+  }
+  50% {
+    transform: translate(-8px, -8px);
+    text-shadow: 3px 3px 0 var(),
+      6px 6px 0 #e8c5ff, 9px 9px #e54,
+      12px 12px 0 #000000;
+  }
+  60% {
+    text-shadow: 3px 3px 0 var(),
+      6px 6px 0 #e8c5ff, 9px 9px #e54,
+      12px 12px 0 #000000;
+  }
+  70% {
+    text-shadow: 3px 3px 0 var(),
+      6px 6px 0 #e8c5ff, 9px 9px #e54;
+  }
+  80% {
+    text-shadow: 3px 3px 0 var(),
+      6px 6px 0 #e8c5ff;
+  }
+  90% {
+    text-shadow: 3px 3px 0 var();
+  }
+  100% {
+    text-shadow: none;
+  }
 }

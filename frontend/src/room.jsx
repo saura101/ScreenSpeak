@@ -35,7 +35,7 @@ function Room(props) {
   const [remoteName, setRemoteName] = useState(null);
   const [videoEnabled, setVideoEnabled] = useState(true);
   const [audioEnabled, setAudioEnabled] = useState(true);
-  const [message, setMessage] = useState([{ name : "self", msg : "begining" }]);
+  const [message, setMessage] = useState([]);
   const [sentMsg, setSentMsg] = useState("");
 
   async function handleTrack(event) {
@@ -275,7 +275,7 @@ function Room(props) {
             channel.onmessage = (event) => {
               console.log(event.data);
               setMessage((prevval) => {
-                return [...prevval, { name : "remote", msg : event.data}];
+                return [...prevval, { name: "remote", msg: event.data }];
               });
             };
           }
@@ -374,7 +374,7 @@ function Room(props) {
   }
   function displayMsg() {
     setMessage((prevval) => {
-      return [...prevval, { name : "self", msg : sentMsg}];
+      return [...prevval, { name: "self", msg: sentMsg }];
     });
     console.log(message);
     channel.send(sentMsg);
@@ -439,19 +439,21 @@ function Room(props) {
             />
           )}
         </button>
-
-        <button onClick={handleDisconnect} className="disconnectButton">
-          <FontAwesomeIcon icon={faPhoneSlash} />
-        </button>
         <button className="chatButton disabled" id="openButton" disabled>
           <FontAwesomeIcon icon={faComment} />
         </button>
+        <button onClick={handleDisconnect} className="disconnectButton">
+          <FontAwesomeIcon icon={faPhoneSlash} />
+        </button>
+
         <div id="compartment" className="compartment">
           <div className="chat-container">
             <div className="chat-messages" id="chatMessages">
-              <p>Your Conversation</p>
+              <div className="chutchat">Chatter-box</div>
               {message.map((msg, index) => (
-                <p key={index} className={msg.name}>{msg.msg}</p>
+                <p key={index} className={msg.name}>
+                  {msg.msg}
+                </p>
               ))}
             </div>
             <div className="chat-input">
@@ -469,6 +471,7 @@ function Room(props) {
                 onClick={() => {
                   displayMsg();
                 }}
+                disabled={!sentMsg}
               >
                 <FontAwesomeIcon icon={faPaperPlane} />
               </button>
