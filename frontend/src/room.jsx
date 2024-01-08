@@ -312,10 +312,10 @@ function Room(props) {
     if (myStream) {
       const tracks = myStream.getTracks();
       tracks.forEach((track) => track.stop());
+    }
       setMyStream(null); // Clear the stream state
       setRemoteStream(null);
       setRemoteName(null);
-    }
       console.log("Room Disconnected");
       socket.emit("room-diconnect", { room: props.roomID, email: User.email });
       socket.disconnect();
