@@ -320,7 +320,8 @@ function Room(props) {
       socket.emit("room-diconnect", { room: props.roomID, email: User.email });
       socket.disconnect();
       //peer.removeTrack();
-      peer.close();
+      if(peer)
+        peer.close();
       peer = null;
       navigate("/");
       console.log("peer after disconnect", peer);
