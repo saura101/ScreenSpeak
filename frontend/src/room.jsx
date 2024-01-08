@@ -315,6 +315,7 @@ function Room(props) {
       setMyStream(null); // Clear the stream state
       setRemoteStream(null);
       setRemoteName(null);
+    }
       console.log("Room Disconnected");
       socket.emit("room-diconnect", { room: props.roomID, email: User.email });
       socket.disconnect();
@@ -323,7 +324,7 @@ function Room(props) {
       peer = null;
       navigate("/");
       console.log("peer after disconnect", peer);
-    }
+    
   }
 
   React.useEffect(() => {
